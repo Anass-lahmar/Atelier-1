@@ -144,7 +144,7 @@ function showAtelier(num) {
 
   if (num === 1) {
     content.innerHTML = `
-      <div class="card fade" onclick="openFile('#')">
+      <div class="card fade" ">
         <a href="seance1_ex2_etoile.php" target="_blank">📘</a>
         Exercice 1
       </div>
