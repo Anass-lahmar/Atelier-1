@@ -7,7 +7,7 @@
 </head>
 <body>
 <?php
-fonction triangle($a){
+function triangle($a){
 for($i=1;$i<=$a;$i++){
 for($j=$i;$j<=$a;$j++){
       echo("&nbsp;&nbsp");
