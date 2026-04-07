@@ -145,15 +145,15 @@ function showAtelier(num) {
   if (num === 1) {
     content.innerHTML = `
       <div class="card fade" onclick="openFile('#')">
-        <div class="icon">📘</div>
+        <a href="seance1_ex2_etoile.php" target="_blank">📘</a>
         Exercice 1
       </div>
-      <div class="card fade" onclick="openFile('#')">
+      <div class="card fade">
         <div class="icon">📄</div>
         Rapport 1
       </div>
       <div class="card fade" onclick="openFile('#')">
-        <div class="icon">📘</div>
+        <a href="seance1_ex1.php" target="_blank">📘</a>
         Exercice 2
       </div>
       <div class="card fade" onclick="openFile('#')">
