@@ -127,7 +127,7 @@ button {
 
 <div class="profile">
   <h2>Anass Lahmar</h2>
-  <p>Développeur Web | HTML CSS JS</p>
+  <p>Développeur Web</p>
 </div>
 
 
