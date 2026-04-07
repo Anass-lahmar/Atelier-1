@@ -126,15 +126,10 @@ button {
 <header>🎓 Mon Portfolio</header>
 
 <div class="profile">
-  <h2>Ton Nom</h2>
+  <h2>Anass Lahmar</h2>
   <p>Développeur Web | HTML CSS JS</p>
 </div>
 
-<div class="skills">
-  <div class="skill">HTML</div>
-  <div class="skill">CSS</div>
-  <div class="skill">JavaScript</div>
-</div>
 
 <div class="buttons">
   <button onclick="showAtelier(1)">Atelier 1</button>
