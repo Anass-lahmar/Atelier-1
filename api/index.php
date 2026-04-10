@@ -8,84 +8,63 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
 
     body {
-      background: linear-gradient(135deg, #0f172a, #1e293b, #0f2027);
+      background: linear-gradient(135deg, #0f172a, #1e293b, #020617);
       color: #e2e8f0;
     }
 
     nav {
       display: flex;
       justify-content: space-between;
-      align-items: center;
       padding: 20px 50px;
-      background: rgba(0,0,0,0.3);
+      background: rgba(0,0,0,0.4);
       backdrop-filter: blur(10px);
-      position: sticky;
-      top: 0;
     }
 
-    nav h1 {
-      font-size: 20px;
-      color: #38bdf8;
-    }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 20px;
-    }
-
-    nav ul li {
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    nav ul li:hover {
-      color: #38bdf8;
-    }
+    nav h1 { color: #38bdf8; }
 
     header {
       text-align: center;
-      padding: 80px 20px;
+      padding: 60px 20px;
     }
 
-    header h2 {
-      font-size: 40px;
-      margin-bottom: 10px;
-    }
-
-    header p {
-      opacity: 0.7;
-    }
+    header h2 { font-size: 36px; }
 
     .container {
       width: 85%;
       margin: auto;
     }
 
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
     .atelier {
-      margin: 40px 0;
-      padding: 25px;
+      padding: 30px;
       border-radius: 20px;
       background: rgba(255,255,255,0.05);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      transition: transform 0.3s;
+      cursor: pointer;
+      transition: 0.3s;
+      text-align: center;
+      font-weight: 600;
+      font-size: 18px;
     }
 
     .atelier:hover {
-      transform: translateY(-5px);
+      transform: translateY(-5px) scale(1.02);
+      background: rgba(56,189,248,0.2);
     }
 
-    .atelier h2 {
-      margin-bottom: 20px;
-      color: #38bdf8;
+    .details {
+      display: none;
+      margin-top: 30px;
+      padding: 20px;
+      border-radius: 15px;
+      background: rgba(255,255,255,0.05);
     }
 
     .exercice {
@@ -93,23 +72,12 @@
       padding: 15px;
       border-radius: 12px;
       background: rgba(255,255,255,0.08);
-      transition: 0.3s;
-    }
-
-    .exercice:hover {
-      background: rgba(255,255,255,0.15);
-    }
-
-    .exercice h3 {
-      color: #facc15;
     }
 
     .rapport {
-      margin-top: 10px;
-      padding: 12px;
-      background: rgba(0,0,0,0.4);
-      border-radius: 10px;
-      font-size: 14px;
+      margin-top: 8px;
+      font-size: 13px;
+      opacity: 0.8;
     }
 
     .btn {
@@ -136,85 +104,63 @@
 
 <nav>
   <h1>Anass Lahmar</h1>
-  <ul>
-    <li>Accueil</li>
-    <li>Ateliers</li>
-    <li>Contact</li>
-  </ul>
 </nav>
 
 <header>
-  <h2>Portfolio Professionnel</h2>
-  <p>Développement Digital | Projets & Ateliers</p>
+  <h2>Mes Ateliers</h2>
 </header>
 
 <div class="container">
 
-  <!-- Atelier 1 -->
-  <div class="atelier">
-    <h2>Atelier 1 - HTML / CSS</h2>
-
-    <div class="exercice">
-      <h3>Exercice 1 - Page Web</h3>
-      <p>Création d'une page web responsive.</p>
-      <div class="rapport">Rapport : Structure HTML5 + mise en page CSS moderne.</div>
-      <a href="#" class="btn">Voir Rapport</a>
-    </div>
-
-    <div class="exercice">
-      <h3>Exercice 2 - Flexbox</h3>
-      <p>Utilisation de Flexbox pour layout.</p>
-      <div class="rapport">Rapport : Alignement et distribution des éléments.</div>
-      <a href="#" class="btn">Voir Rapport</a>
-    </div>
-
+  <div class="grid">
+    <div class="atelier" onclick="showAtelier(1)">Atelier 1</div>
+    <div class="atelier" onclick="showAtelier(2)">Atelier 2</div>
+    <div class="atelier" onclick="showAtelier(3)">Atelier 3</div>
+    <div class="atelier" onclick="showAtelier(4)">Atelier 4</div>
   </div>
 
-  <!-- Atelier 2 -->
-  <div class="atelier">
-    <h2>Atelier 2 - JavaScript</h2>
+  <!-- TEMPLATE FUNCTION REPEATED -->
 
-    <div class="exercice">
-      <h3>Exercice 1 - DOM</h3>
-      <p>Manipulation dynamique des éléments.</p>
-      <div class="rapport">Rapport : Interaction utilisateur avec JS.</div>
-      <a href="#" class="btn">Voir Rapport</a>
-    </div>
+  <script>
+    function exercicesHTML() {
+      let html = '';
+      for(let i=1;i<=8;i++){
+        html += `
+        <div class="exercice">
+          <p>Exercice ${i}</p>
+          <div class="rapport">Rapport : description de l'exercice ${i}</div>
+          <a href="https://github.com/" target="_blank" class="btn">Voir sur GitHub</a>
+        </div>`;
+      }
+      return html;
+    }
+  </script>
 
-    <div class="exercice">
-      <h3>Exercice 2 - Events</h3>
-      <p>Gestion des événements.</p>
-      <div class="rapport">Rapport : Click, hover, input events.</div>
-      <a href="#" class="btn">Voir Rapport</a>
-    </div>
+  <!-- DETAILS -->
 
-  </div>
-
-  <!-- Atelier 3 -->
-  <div class="atelier">
-    <h2>Atelier 3 - Backend</h2>
-
-    <div class="exercice">
-      <h3>Exercice 1 - API REST</h3>
-      <p>Création d'une API avec Node.js.</p>
-      <div class="rapport">Rapport : Routes + Controllers + JSON.</div>
-      <a href="#" class="btn">Voir Rapport</a>
-    </div>
-
-    <div class="exercice">
-      <h3>Exercice 2 - Database</h3>
-      <p>Connexion MongoDB.</p>
-      <div class="rapport">Rapport : CRUD operations.</div>
-      <a href="#" class="btn">Voir Rapport</a>
-    </div>
-
-  </div>
+  <div id="atelier1" class="details"><h3>Exercices Atelier 1</h3></div>
+  <div id="atelier2" class="details"><h3>Exercices Atelier 2</h3></div>
+  <div id="atelier3" class="details"><h3>Exercices Atelier 3</h3></div>
+  <div id="atelier4" class="details"><h3>Exercices Atelier 4</h3></div>
 
 </div>
 
 <footer>
-  © 2026 - Anass Lahmar | Portfolio Professionnel
+  © 2026 - Anass Lahmar
 </footer>
+
+<script>
+  function showAtelier(id) {
+    document.querySelectorAll('.details').forEach(el => {
+      el.style.display = 'none';
+      el.innerHTML = '<h3>Exercices Atelier ' + el.id.replace('atelier','') + '</h3>';
+    });
+
+    let section = document.getElementById('atelier' + id);
+    section.style.display = 'block';
+    section.innerHTML += exercicesHTML();
+  }
+</script>
 
 </body>
 </html>
