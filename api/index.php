@@ -1,203 +1,220 @@
-```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<title>Portfolio Pro</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio - Anass Lahmar</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-<style>
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  transition: 0.3s;
-}
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
 
-/* Light Mode */
-body.light {
-  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-  color: white;
-}
+    body {
+      background: linear-gradient(135deg, #0f172a, #1e293b, #0f2027);
+      color: #e2e8f0;
+    }
 
-/* Dark Mode */
-body.dark {
-  background: #0f172a;
-  color: white;
-}
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+    }
 
-/* Header */
-header {
-  text-align: center;
-  padding: 20px;
-  background: rgba(0,0,0,0.2);
-}
+    nav h1 {
+      font-size: 20px;
+      color: #38bdf8;
+    }
 
-/* Profile */
-.profile {
-  text-align: center;
-  margin: 20px;
-}
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
 
-.profile h2 {
-  margin: 5px;
-}
+    nav ul li {
+      cursor: pointer;
+      transition: 0.3s;
+    }
 
-/* Skills */
-.skills {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  flex-wrap: wrap;
-}
+    nav ul li:hover {
+      color: #38bdf8;
+    }
 
-.skill {
-  background: white;
-  color: #1e3a8a;
-  padding: 8px 15px;
-  border-radius: 20px;
-  font-size: 14px;
-}
+    header {
+      text-align: center;
+      padding: 80px 20px;
+    }
 
-/* Buttons */
-.buttons {
-  text-align: center;
-  margin: 20px;
-}
+    header h2 {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
 
-button {
-  padding: 10px 20px;
-  margin: 5px;
-  border-radius: 20px;
-  border: none;
-  cursor: pointer;
-}
+    header p {
+      opacity: 0.7;
+    }
 
-/* Cards */
-.container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-  gap: 20px;
-  padding: 20px;
-}
+    .container {
+      width: 85%;
+      margin: auto;
+    }
 
-.card {
-  background: white;
-  color: #1f2937;
-  padding: 20px;
-  border-radius: 15px;
-  text-align: center;
-  cursor: pointer;
-  transition: 0.3s;
-}
+    .atelier {
+      margin: 40px 0;
+      padding: 25px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.05);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transition: transform 0.3s;
+    }
 
-.card:hover {
-  transform: scale(1.05);
-}
+    .atelier:hover {
+      transform: translateY(-5px);
+    }
 
-.icon {
-  font-size: 30px;
-}
+    .atelier h2 {
+      margin-bottom: 20px;
+      color: #38bdf8;
+    }
 
-/* Toggle */
-.toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-}
+    .exercice {
+      margin: 15px 0;
+      padding: 15px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.08);
+      transition: 0.3s;
+    }
 
-/* Animation */
-.fade {
-  animation: fade 0.5s;
-}
+    .exercice:hover {
+      background: rgba(255,255,255,0.15);
+    }
 
-@keyframes fade {
-  from {opacity:0;}
-  to {opacity:1;}
-}
-</style>
+    .exercice h3 {
+      color: #facc15;
+    }
 
+    .rapport {
+      margin-top: 10px;
+      padding: 12px;
+      background: rgba(0,0,0,0.4);
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 15px;
+      background: linear-gradient(45deg, #38bdf8, #0ea5e9);
+      border-radius: 8px;
+      color: white;
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      margin-top: 50px;
+      opacity: 0.6;
+    }
+
+  </style>
 </head>
+<body>
 
-<body class="light">
+<nav>
+  <h1>Anass Lahmar</h1>
+  <ul>
+    <li>Accueil</li>
+    <li>Ateliers</li>
+    <li>Contact</li>
+  </ul>
+</nav>
 
-<button class="toggle" onclick="toggleMode()">🌙</button>
+<header>
+  <h2>Portfolio Professionnel</h2>
+  <p>Développement Digital | Projets & Ateliers</p>
+</header>
 
-<header>🎓 Mon Portfolio</header>
+<div class="container">
 
-<div class="profile">
-  <h2>Anass Lahmar</h2>
-  <p>Développeur Web</p>
+  <!-- Atelier 1 -->
+  <div class="atelier">
+    <h2>Atelier 1 - HTML / CSS</h2>
+
+    <div class="exercice">
+      <h3>Exercice 1 - Page Web</h3>
+      <p>Création d'une page web responsive.</p>
+      <div class="rapport">Rapport : Structure HTML5 + mise en page CSS moderne.</div>
+      <a href="#" class="btn">Voir Rapport</a>
+    </div>
+
+    <div class="exercice">
+      <h3>Exercice 2 - Flexbox</h3>
+      <p>Utilisation de Flexbox pour layout.</p>
+      <div class="rapport">Rapport : Alignement et distribution des éléments.</div>
+      <a href="#" class="btn">Voir Rapport</a>
+    </div>
+
+  </div>
+
+  <!-- Atelier 2 -->
+  <div class="atelier">
+    <h2>Atelier 2 - JavaScript</h2>
+
+    <div class="exercice">
+      <h3>Exercice 1 - DOM</h3>
+      <p>Manipulation dynamique des éléments.</p>
+      <div class="rapport">Rapport : Interaction utilisateur avec JS.</div>
+      <a href="#" class="btn">Voir Rapport</a>
+    </div>
+
+    <div class="exercice">
+      <h3>Exercice 2 - Events</h3>
+      <p>Gestion des événements.</p>
+      <div class="rapport">Rapport : Click, hover, input events.</div>
+      <a href="#" class="btn">Voir Rapport</a>
+    </div>
+
+  </div>
+
+  <!-- Atelier 3 -->
+  <div class="atelier">
+    <h2>Atelier 3 - Backend</h2>
+
+    <div class="exercice">
+      <h3>Exercice 1 - API REST</h3>
+      <p>Création d'une API avec Node.js.</p>
+      <div class="rapport">Rapport : Routes + Controllers + JSON.</div>
+      <a href="#" class="btn">Voir Rapport</a>
+    </div>
+
+    <div class="exercice">
+      <h3>Exercice 2 - Database</h3>
+      <p>Connexion MongoDB.</p>
+      <div class="rapport">Rapport : CRUD operations.</div>
+      <a href="#" class="btn">Voir Rapport</a>
+    </div>
+
+  </div>
+
 </div>
 
-
-<div class="buttons">
-  <button onclick="showAtelier(1)">Atelier 1</button>
-  <button onclick="showAtelier(2)">Atelier 2</button>
-</div>
-
-<div id="content" class="container"></div>
-
-<script>
-function showAtelier(num) {
-  let content = document.getElementById("content");
-
-  if (num === 1) {
-    content.innerHTML = `
-      <div class="card fade" ">
-        <a href="seance1_ex2_etoile.php" target="_blank">📘</a>
-        Exercice 1
-      </div>
-      <div class="card fade">
-        <div class="icon">📄</div>
-        Rapport 1
-      </div>
-      <div class="card fade" ">
-        <a href="seance1_ex1.php" target="_blank">📘</a>
-        Exercice 2
-      </div>
-      <div class="card fade" onclick="openFile('c:\Users\I3 5eme\OneDrive\Desktop\Atelier 1\public\rapport exercice 1.pdf')">
-        <div class="icon">📄</div>
-        Rapport 2
-      </div>
-    `;
-  } else {
-    content.innerHTML = `
-      <div class="card fade" ">
-        <div class="icon">📘</div>
-        Exercice 3
-      </div>
-      <div class="card fade" onclick="openFile('#')">
-        <div class="icon">📄</div>
-        Rapport 3
-      </div>
-      <div class="card fade" onclick="openFile('#')">
-        <div class="icon">📘</div>
-        Exercice 4
-      </div>
-      <div class="card fade" onclick="openFile('#')">
-        <div class="icon">📄</div>
-        Rapport 4
-      </div>
-    `;
-  }
-}
-
-/* Open file (PDF link later) */
-function openFile(link) {
-  alert("Hna t9dar t7et lien dyal PDF");
-}
-
-/* Dark Mode */
-function toggleMode() {
-  document.body.classList.toggle("dark");
-  document.body.classList.toggle("light");
-}
-
-/* Default */
-window.onload = () => showAtelier(1);
-</script>
+<footer>
+  © 2026 - Anass Lahmar | Portfolio Professionnel
+</footer>
 
 </body>
 </html>
-```
