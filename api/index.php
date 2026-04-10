@@ -23,7 +23,7 @@
       backdrop-filter: blur(10px);
     }
 
-    nav h1 { color: #38bdf8; }
+    nav h1 { color: #f8385e; }
 
     header {
       text-align: center;
