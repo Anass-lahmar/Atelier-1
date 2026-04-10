@@ -32,10 +32,7 @@
 
     header h2 { font-size: 36px; }
 
-    .container {
-      width: 85%;
-      margin: auto;
-    }
+    .container { width: 85%; margin: auto; }
 
     .grid {
       display: grid;
@@ -48,47 +45,60 @@
       border-radius: 20px;
       background: rgba(255,255,255,0.05);
       cursor: pointer;
-      transition: 0.3s;
       text-align: center;
-      font-weight: 600;
-      font-size: 18px;
+      transition: 0.3s;
     }
 
     .atelier:hover {
-      transform: translateY(-5px) scale(1.02);
+      transform: translateY(-5px);
       background: rgba(56,189,248,0.2);
     }
 
     .details {
       display: none;
       margin-top: 30px;
-      padding: 20px;
-      border-radius: 15px;
-      background: rgba(255,255,255,0.05);
     }
 
     .exercice {
-      margin: 15px 0;
+      margin: 10px 0;
       padding: 15px;
-      border-radius: 12px;
+      border-radius: 10px;
       background: rgba(255,255,255,0.08);
+      cursor: pointer;
     }
 
-    .rapport {
-      margin-top: 8px;
-      font-size: 13px;
-      opacity: 0.8;
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
     }
 
-    .btn {
-      display: inline-block;
-      margin-top: 10px;
+    .modal-content {
+      background: #0f172a;
+      padding: 25px;
+      border-radius: 15px;
+      width: 400px;
+      text-align: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .close {
+      margin-top: 15px;
       padding: 8px 15px;
-      background: linear-gradient(45deg, #38bdf8, #0ea5e9);
+      background: #38bdf8;
+      border: none;
       border-radius: 8px;
+      cursor: pointer;
       color: white;
-      text-decoration: none;
-      font-size: 13px;
     }
 
     footer {
@@ -119,30 +129,20 @@
     <div class="atelier" onclick="showAtelier(4)">Atelier 4</div>
   </div>
 
-  <!-- TEMPLATE FUNCTION REPEATED -->
+  <div id="atelier1" class="details"></div>
+  <div id="atelier2" class="details"></div>
+  <div id="atelier3" class="details"></div>
+  <div id="atelier4" class="details"></div>
 
-  <script>
-    function exercicesHTML() {
-      let html = '';
-      for(let i=1;i<=8;i++){
-        html += `
-        <div class="exercice">
-          <p>Exercice ${i}</p>
-          <div class="rapport">Rapport : description de l'exercice ${i}</div>
-          <a href="https://github.com/" target="_blank" class="btn">Voir sur GitHub</a>
-        </div>`;
-      }
-      return html;
-    }
-  </script>
+</div>
 
-  <!-- DETAILS -->
-
-  <div id="atelier1" class="details"><h3>Exercices Atelier 1</h3></div>
-  <div id="atelier2" class="details"><h3>Exercices Atelier 2</h3></div>
-  <div id="atelier3" class="details"><h3>Exercices Atelier 3</h3></div>
-  <div id="atelier4" class="details"><h3>Exercices Atelier 4</h3></div>
-
+<!-- MODAL -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <h3 id="modalTitle"></h3>
+    <p id="modalText"></p>
+    <button class="close" onclick="closeModal()">Fermer</button>
+  </div>
 </div>
 
 <footer>
@@ -150,15 +150,33 @@
 </footer>
 
 <script>
+  function generateExercices(id) {
+    let html = '';
+    for (let i = 1; i <= 8; i++) {
+      html += `<div class="exercice" onclick="openModal(${id}, ${i})">Exercice ${i}</div>`;
+    }
+    return html;
+  }
+
   function showAtelier(id) {
     document.querySelectorAll('.details').forEach(el => {
       el.style.display = 'none';
-      el.innerHTML = '<h3>Exercices Atelier ' + el.id.replace('atelier','') + '</h3>';
+      el.innerHTML = '';
     });
 
     let section = document.getElementById('atelier' + id);
     section.style.display = 'block';
-    section.innerHTML += exercicesHTML();
+    section.innerHTML = generateExercices(id);
+  }
+
+  function openModal(atelier, exercice) {
+    document.getElementById('modal').style.display = 'flex';
+    document.getElementById('modalTitle').innerText = `Atelier ${atelier} - Exercice ${exercice}`;
+    document.getElementById('modalText').innerText = `Rapport détaillé de l'exercice ${exercice}.`;
+  }
+
+  function closeModal() {
+    document.getElementById('modal').style.display = 'none';
   }
 </script>
 
