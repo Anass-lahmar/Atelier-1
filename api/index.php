@@ -7,90 +7,63 @@
 <style>
 body{
   margin:0;
-  font-family:Arial, sans-serif;
-  background:linear-gradient(135deg,#0b3d91,#1e90ff,#00aaff);
+  font-family:'Poppins', sans-serif;
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
   color:white;
+  overflow-x:hidden;
 }
 
-/* NAVBAR */
+/* NAV */
 nav{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:15px 30px;
-  background:rgba(0,0,0,0.3);
-  backdrop-filter:blur(10px);
-}
-
-nav h1{
-  margin:0;
-}
-
-nav ul{
-  list-style:none;
-  display:flex;
-  gap:20px;
-}
-
-nav ul li{
-  cursor:pointer;
-  transition:0.3s;
-}
-
-nav ul li:hover{
-  color:#00e0ff;
+  padding:15px 40px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(15px);
 }
 
 /* HEADER */
 header{
   text-align:center;
-  padding:40px;
-}
-
-header h2{
-  font-size:36px;
+  padding:60px 20px;
 }
 
 /* GRID */
 .container{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:20px;
-  padding:20px;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:25px;
+  padding:30px;
 }
 
 .atelier{
-  background:rgba(255,255,255,0.15);
-  padding:20px;
-  border-radius:12px;
+  background:rgba(255,255,255,0.08);
+  padding:25px;
+  border-radius:20px;
   text-align:center;
   cursor:pointer;
-  font-weight:bold;
-  transition:0.3s;
-  box-shadow:0 4px 20px rgba(0,0,0,0.2);
+  backdrop-filter:blur(12px);
+  transition:0.4s;
 }
 
 .atelier:hover{
-  transform:translateY(-5px) scale(1.05);
-  background:rgba(255,255,255,0.3);
-}
-
-/* EXERCICES */
-#exercices{
-  padding:20px;
+  transform:translateY(-10px) scale(1.05);
+  box-shadow:0 20px 40px rgba(0,0,0,0.5);
 }
 
 .exercice{
-  background:rgba(255,255,255,0.2);
-  margin:10px 0;
-  padding:12px;
-  border-radius:8px;
+  background:rgba(255,255,255,0.08);
+  margin:12px 0;
+  padding:14px;
+  border-radius:10px;
   cursor:pointer;
   transition:0.3s;
 }
 
 .exercice:hover{
-  background:rgba(255,255,255,0.35);
+  transform:translateX(8px);
+  background:rgba(255,255,255,0.2);
 }
 
 /* MODAL */
@@ -99,54 +72,52 @@ header h2{
   position:fixed;
   top:0;left:0;
   width:100%;height:100%;
-  background:rgba(0,0,0,0.7);
+  background:rgba(0,0,0,0.8);
+  backdrop-filter:blur(6px);
 }
 
 .modal-content{
-  background:#ffffff;
-  color:black;
+  background:rgba(255,255,255,0.1);
+  backdrop-filter:blur(20px);
   width:90%;
   max-width:500px;
-  margin:80px auto;
-  padding:20px;
-  border-radius:10px;
-  animation:fadeIn 0.3s ease;
+  margin:100px auto;
+  padding:25px;
+  border-radius:15px;
 }
 
-@keyframes fadeIn{
-  from{opacity:0; transform:scale(0.9);}
-  to{opacity:1; transform:scale(1);}
-}
-
-textarea{
+/* INPUT */
+input{
   width:100%;
-  height:120px;
-  margin-top:10px;
-  border-radius:5px;
-  padding:8px;
+  padding:10px;
+  margin:10px 0;
+  border:none;
+  border-radius:8px;
 }
 
+/* BUTTON */
 button{
-  margin-top:10px;
-  padding:10px;
+  padding:10px 15px;
   border:none;
-  background:#007bff;
+  border-radius:8px;
+  background:#00c6ff;
   color:white;
   cursor:pointer;
-  border-radius:5px;
-  margin-right:5px;
+  transition:0.3s;
+  margin:5px 3px;
 }
 
 button:hover{
-  background:#0056b3;
+  transform:scale(1.05);
+  background:#0072ff;
 }
 
-/* FOOTER */
-footer{
-  text-align:center;
-  padding:20px;
-  background:rgba(0,0,0,0.3);
-  margin-top:30px;
+/* RIPPLE */
+@keyframes ripple{
+  to{
+    transform:scale(20);
+    opacity:0;
+  }
 }
 </style>
 </head>
@@ -155,16 +126,11 @@ footer{
 
 <nav>
   <h1>Anass Lahmar</h1>
-  <ul>
-    <li>Accueil</li>
-    <li>Portfolio</li>
-    <li>Contact</li>
-  </ul>
 </nav>
 
 <header>
   <h2>Mon Portfolio</h2>
-  <p>Travaux pratiques & rapports</p>
+  <p>TP & Rapports avec liens</p>
 </header>
 
 <div class="container">
@@ -172,6 +138,14 @@ footer{
   <div class="atelier" onclick="openAtelier('Atelier 2')">Atelier 2</div>
   <div class="atelier" onclick="openAtelier('Atelier 3')">Atelier 3</div>
   <div class="atelier" onclick="openAtelier('Atelier 4')">Atelier 4</div>
+  <div class="atelier" onclick="openAtelier('Atelier 5')">Atelier 5</div>
+  <div class="atelier" onclick="openAtelier('Atelier 6')">Atelier 6</div>
+  <div class="atelier" onclick="openAtelier('Atelier 7')">Atelier 7</div>
+  <div class="atelier" onclick="openAtelier('Atelier 8')">Atelier 8</div>
+  <div class="atelier" onclick="openAtelier('Atelier 9')">Atelier 9</div>
+  <div class="atelier" onclick="openAtelier('Atelier 10')">Atelier 10</div>
+  <div class="atelier" onclick="openAtelier('Atelier 11')">Atelier 11</div>
+  <div class="atelier" onclick="openAtelier('Atelier 12')">Atelier 12</div>
 </div>
 
 <div id="exercices"></div>
@@ -180,11 +154,17 @@ footer{
   <div class="modal-content">
     <h3 id="title"></h3>
 
-    <label>Rapport</label>
-    <textarea id="rapport"></textarea>
+    <label>Lien TP</label>
+    <input type="text" id="tpLink">
 
-    <label>TP</label>
-    <textarea id="tp"></textarea>
+    <button onclick="openLink('tp')">🔗 Ouvrir TP</button>
+
+    <label>Lien Rapport</label>
+    <input type="text" id="rapportLink">
+
+    <button onclick="openLink('rapport')">🔗 Ouvrir Rapport</button>
+
+    <br><br>
 
     <button onclick="saveData()">💾 Sauvegarder</button>
     <button onclick="deleteData()">🗑 Supprimer</button>
@@ -192,72 +172,71 @@ footer{
   </div>
 </div>
 
-<footer>
-  © 2026 - Anass Lahmar | Portfolio
-</footer>
-
 <script>
 const data = {
-  "Atelier 1": ["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-  "Atelier 2": ["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-  "Atelier 3": ["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-  "Atelier 4": ["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"]
+"Atelier 1":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
+"Atelier 2":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
+"Atelier 3":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
+"Atelier 4":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
+"Atelier 5":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
+"Atelier 6":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
+"Atelier 7":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
+"Atelier 8":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
+"Atelier 9":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
+"Atelier 10":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
+"Atelier 11":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
+"Atelier 12":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"]
 };
 
-let currentExercice = "";
+let currentKey="";
 
 function openAtelier(name){
-  let box = document.getElementById("exercices");
-  box.innerHTML = "<h3>"+name+"</h3>";
+let box=document.getElementById("exercices");
+box.innerHTML="<h3>"+name+"</h3>";
 
-  data[name].forEach(ex=>{
-    let div = document.createElement("div");
-    div.className="exercice";
-    div.innerText=ex;
-    div.onclick=()=>openExercise(ex);
-    box.appendChild(div);
-  });
+data[name].forEach(ex=>{
+let div=document.createElement("div");
+div.className="exercice";
+div.innerText=ex;
+div.onclick=()=>openExercise(name,ex);
+box.appendChild(div);
+});
 }
 
-function openExercise(name){
-  currentExercice = name;
+function openExercise(a,ex){
+currentKey=a+"_"+ex;
+document.getElementById("modal").style.display="block";
+document.getElementById("title").innerText=currentKey;
 
-  document.getElementById("modal").style.display="block";
-  document.getElementById("title").innerText=name;
-
-  document.getElementById("rapport").value =
-    localStorage.getItem(name+"_rapport") || "";
-
-  document.getElementById("tp").value =
-    localStorage.getItem(name+"_tp") || "";
+document.getElementById("tpLink").value=localStorage.getItem(currentKey+"_tp")||"";
+document.getElementById("rapportLink").value=localStorage.getItem(currentKey+"_rapport")||"";
 }
 
 function saveData(){
-  localStorage.setItem(currentExercice+"_rapport",
-    document.getElementById("rapport").value);
-
-  localStorage.setItem(currentExercice+"_tp",
-    document.getElementById("tp").value);
-
-  alert("Données sauvegardées !");
+localStorage.setItem(currentKey+"_tp",document.getElementById("tpLink").value);
+localStorage.setItem(currentKey+"_rapport",document.getElementById("rapportLink").value);
+alert("Saved !");
 }
 
 function deleteData(){
-  localStorage.removeItem(currentExercice+"_rapport");
-  localStorage.removeItem(currentExercice+"_tp");
+localStorage.removeItem(currentKey+"_tp");
+localStorage.removeItem(currentKey+"_rapport");
+document.getElementById("tpLink").value="";
+document.getElementById("rapportLink").value="";
+}
 
-  document.getElementById("rapport").value="";
-  document.getElementById("tp").value="";
+function openLink(type){
+let link=localStorage.getItem(currentKey+"_"+type);
+if(link) window.open(link,"_blank");
+else alert("No link");
 }
 
 function closeModal(){
-  document.getElementById("modal").style.display="none";
+document.getElementById("modal").style.display="none";
 }
 
 function outsideClick(e){
-  if(e.target.id === "modal"){
-    closeModal();
-  }
+if(e.target.id==="modal") closeModal();
 }
 </script>
 
