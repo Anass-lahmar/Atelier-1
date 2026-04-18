@@ -54,10 +54,11 @@ nav{
 
 .hero{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:1fr;
   align-items:center;
   min-height:calc(100vh - 73px);
   padding:0 60px;gap:60px;
+  max-width:700px;
 }
 .hero-left{animation:fadeUp 0.8s ease both;}
 .hero-tag{
@@ -350,11 +351,6 @@ input::placeholder{color:rgba(255,255,255,0.3);}
       <div class="stat-item"><span>12</span><span>Ateliers</span></div>
       <div class="stat-item"><span>96+</span><span>Exercices</span></div>
       <div class="stat-item"><span>OFPPT</span><span>Tanger</span></div>
-    </div>
-  </div>
-  <div class="hero-right">
-    <div class="photo-frame">
-      <img src="C:\Users\I3 5eme\OneDrive\Desktop\PHP\api\profil.jpg" alt="Anass Lahmar">
     </div>
   </div>
 </section>
