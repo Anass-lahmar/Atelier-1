@@ -16,32 +16,36 @@ body{
 /* NAV */
 nav{
   display:flex;
-  justify-content:center;
+  justify-content:space-between;
   align-items:center;
-  padding:25px 40px;
+  padding:20px 40px;
   background:rgba(255,255,255,0.05);
   backdrop-filter:blur(15px);
 }
 
-.nav-center{
-  text-align:center;
+/* PROFILE */
+.profile{
+  display:flex;
+  align-items:center;
+  gap:15px;
 }
 
-.nav-center h1{
-  margin:0;
-  font-size:30px;
-  letter-spacing:2px;
-  font-weight:600;
-  text-transform:uppercase;
+.profile img{
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid #00c6ff;
+  box-shadow:0 0 15px rgba(0,198,255,0.5);
 }
 
-.nav-center span{
-  display:block;
-  margin-top:6px;
+.profile strong{
+  font-size:18px;
+}
+
+.profile span{
   font-size:12px;
-  letter-spacing:4px;
   opacity:0.7;
-  text-transform:uppercase;
 }
 
 /* GRID */
@@ -73,6 +77,9 @@ nav{
   padding:14px;
   border-radius:10px;
   cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
   transition:0.3s;
 }
 
@@ -93,12 +100,12 @@ nav{
 
 .modal-content{
   background:rgba(255,255,255,0.1);
-  backdrop-filter:blur(20px);
   width:90%;
   max-width:500px;
   margin:100px auto;
   padding:25px;
   border-radius:15px;
+  backdrop-filter:blur(20px);
 }
 
 input{
@@ -117,24 +124,12 @@ button{
   color:white;
   cursor:pointer;
   transition:0.3s;
-  margin:5px 3px;
+  margin:5px;
 }
 
 button:hover{
   transform:scale(1.05);
   background:#0072ff;
-}
-
-/* SCROLL ANIMATION */
-.atelier, .exercice{
-  opacity:0;
-  transform:translateY(40px);
-  transition:all 0.6s ease;
-}
-
-.show{
-  opacity:1;
-  transform:translateY(0);
 }
 </style>
 </head>
@@ -142,10 +137,13 @@ button:hover{
 <body>
 
 <nav>
-  <div class="nav-center">
-    <h1>ANASS LAHMAR</h1>
-    <span>Mon Portfolio</span>
-    <span>TPs et Rapports</span>
+  <div class="profile">
+    <!-- 👇 دير صورتك هنا -->
+    <img src="https://via.placeholder.com/150" alt="profile">
+    <div>
+      <strong>ANASS LAHMAR</strong><br>
+      <span>Web Developer Portfolio</span>
+    </div>
   </div>
 </nav>
 
@@ -156,12 +154,6 @@ button:hover{
   <div class="atelier" onclick="openAtelier('Atelier 4')">Atelier 4</div>
   <div class="atelier" onclick="openAtelier('Atelier 5')">Atelier 5</div>
   <div class="atelier" onclick="openAtelier('Atelier 6')">Atelier 6</div>
-  <div class="atelier" onclick="openAtelier('Atelier 7')">Atelier 7</div>
-  <div class="atelier" onclick="openAtelier('Atelier 8')">Atelier 8</div>
-  <div class="atelier" onclick="openAtelier('Atelier 9')">Atelier 9</div>
-  <div class="atelier" onclick="openAtelier('Atelier 10')">Atelier 10</div>
-  <div class="atelier" onclick="openAtelier('Atelier 11')">Atelier 11</div>
-  <div class="atelier" onclick="openAtelier('Atelier 12')">Atelier 12</div>
 </div>
 
 <div id="exercices"></div>
@@ -173,14 +165,8 @@ button:hover{
     <label>Lien TP</label>
     <input type="text" id="tpLink">
 
-    <button onclick="openLink('tp')">🔗 Ouvrir TP</button>
-
     <label>Lien Rapport</label>
     <input type="text" id="rapportLink">
-
-    <button onclick="openLink('rapport')">🔗 Ouvrir Rapport</button>
-
-    <br><br>
 
     <button onclick="saveData()">💾 Sauvegarder</button>
     <button onclick="deleteData()">🗑 Supprimer</button>
@@ -190,18 +176,12 @@ button:hover{
 
 <script>
 const data = {
-"Atelier 1":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-"Atelier 2":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-"Atelier 3":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-"Atelier 4":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-"Atelier 5":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-"Atelier 6":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-"Atelier 7":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-"Atelier 8":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-"Atelier 9":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-"Atelier 10":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-"Atelier 11":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-"Atelier 12":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"]
+"Atelier 1":["Exercice 1","Exercice 2","Exercice 3","Exercice 4"],
+"Atelier 2":["Exercice 1","Exercice 2","Exercice 3","Exercice 4"],
+"Atelier 3":["Exercice 1","Exercice 2","Exercice 3","Exercice 4"],
+"Atelier 4":["Exercice 1","Exercice 2","Exercice 3","Exercice 4"],
+"Atelier 5":["Exercice 1","Exercice 2","Exercice 3","Exercice 4"],
+"Atelier 6":["Exercice 1","Exercice 2","Exercice 3","Exercice 4"]
 };
 
 let currentKey="";
@@ -211,29 +191,41 @@ let box=document.getElementById("exercices");
 box.innerHTML="<h3>"+name+"</h3>";
 
 data[name].forEach(ex=>{
+let key=name+"_"+ex;
+
+let tp=localStorage.getItem(key+"_tp");
+let rp=localStorage.getItem(key+"_rapport");
+
+let status="🔴";
+if(tp && rp) status="🟢";
+else if(tp || rp) status="🟡";
+
 let div=document.createElement("div");
 div.className="exercice";
-div.innerText=ex;
+
+div.innerHTML=`<span>${status} ${ex}</span>`;
+
 div.onclick=()=>openExercise(name,ex);
 box.appendChild(div);
 });
-
-observeElements();
 }
 
 function openExercise(a,ex){
 currentKey=a+"_"+ex;
 document.getElementById("modal").style.display="block";
-document.getElementById("title").innerText=currentKey;
 
-document.getElementById("tpLink").value=localStorage.getItem(currentKey+"_tp")||"";
-document.getElementById("rapportLink").value=localStorage.getItem(currentKey+"_rapport")||"";
+document.getElementById("tpLink").value=
+localStorage.getItem(currentKey+"_tp")||"";
+
+document.getElementById("rapportLink").value=
+localStorage.getItem(currentKey+"_rapport")||"";
+
+document.getElementById("title").innerText=currentKey;
 }
 
 function saveData(){
 localStorage.setItem(currentKey+"_tp",document.getElementById("tpLink").value);
 localStorage.setItem(currentKey+"_rapport",document.getElementById("rapportLink").value);
-alert("Saved !");
 }
 
 function deleteData(){
@@ -243,12 +235,6 @@ document.getElementById("tpLink").value="";
 document.getElementById("rapportLink").value="";
 }
 
-function openLink(type){
-let link=localStorage.getItem(currentKey+"_"+type);
-if(link) window.open(link,"_blank");
-else alert("No link");
-}
-
 function closeModal(){
 document.getElementById("modal").style.display="none";
 }
@@ -256,23 +242,6 @@ document.getElementById("modal").style.display="none";
 function outsideClick(e){
 if(e.target.id==="modal") closeModal();
 }
-
-/* SCROLL ANIMATION */
-const observer=new IntersectionObserver((entries)=>{
-entries.forEach(entry=>{
-if(entry.isIntersecting){
-entry.target.classList.add("show");
-}
-});
-},{threshold:0.15});
-
-function observeElements(){
-document.querySelectorAll(".atelier, .exercice").forEach(el=>{
-observer.observe(el);
-});
-}
-
-window.addEventListener("load",observeElements);
 </script>
 
 </body>
