@@ -317,7 +317,7 @@ input::placeholder{color:rgba(255,255,255,0.3);}
   <div class="hero-right">
     <div class="photo-frame">
       <!-- ⚠️ DIR SMIYA DYAL LA PHOTO DYALK HENA (nafs dossier dyal had fichier) -->
-      <img src="ta-photo.jpg" alt="Anass Lahmar">
+      <img src="WhatsApp Image 2026-04-18 at 12.52.28.jpg" alt="Anass Lahmar">
     </div>
   </div>
 </section>
