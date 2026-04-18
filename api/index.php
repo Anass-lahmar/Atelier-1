@@ -15,12 +15,53 @@
   --text:#fff;
   --muted:rgba(255,255,255,0.6);
 }
+
+/* ── CURSOR ── */
+.cursor{
+  position:fixed;width:10px;height:10px;
+  background:var(--accent);border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:transform 0.1s,opacity 0.3s;
+  mix-blend-mode:screen;
+}
+.cursor-ring{
+  position:fixed;width:36px;height:36px;
+  border:1.5px solid rgba(0,198,255,0.45);
+  border-radius:50%;pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:width 0.3s,height 0.3s,border-color 0.3s,transform 0.12s;
+}
+.cursor-ring.hovered{
+  width:52px;height:52px;
+  border-color:rgba(0,198,255,0.8);
+}
+body:hover .cursor{opacity:1;}
+
+/* ── SCROLL PROGRESS ── */
+#scrollProgress{
+  position:fixed;top:0;left:0;height:2px;width:0%;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  z-index:9997;
+  box-shadow:0 0 8px rgba(0,198,255,0.7);
+  transition:width 0.05s linear;
+}
+
+/* ── PARTICLES CANVAS ── */
+#bgCanvas{
+  position:fixed;top:0;left:0;
+  width:100%;height:100%;
+  pointer-events:none;z-index:0;
+  opacity:0.55;
+}
+
 body{
   font-family:'Inter',sans-serif;
   background:linear-gradient(135deg,var(--bg),var(--bg2),var(--bg3));
   color:var(--text);
   min-height:100vh;
   overflow-x:hidden;
+  cursor:none;
 }
 
 /* ── NAV ── */
@@ -33,14 +74,19 @@ nav{
   backdrop-filter:blur(20px);
   border-bottom:1px solid rgba(255,255,255,0.07);
   position:sticky;top:0;z-index:100;
+  transition:padding 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+}
+nav.scrolled{
+  padding:14px 60px;
+  background:rgba(15,32,39,0.92);
+  box-shadow:0 8px 40px rgba(0,0,0,0.4);
 }
 
-/* NAV LOGO HOVER — underline slides in from left on cursor enter */
 .nav-logo{
   font-family:'Syne',sans-serif;
   font-weight:800;font-size:20px;
   letter-spacing:2px;text-transform:uppercase;
-  cursor:default;
+  cursor:none;
   display:inline-block;
   position:relative;
   padding-bottom:4px;
@@ -60,9 +106,17 @@ nav{
 .nav-links a{
   color:var(--muted);text-decoration:none;
   font-size:13px;letter-spacing:0.5px;
-  transition:color 0.2s;cursor:pointer;
+  transition:color 0.2s;cursor:none;
+  position:relative;padding-bottom:3px;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:0;left:0;
+  width:0;height:1px;
+  background:var(--accent);
+  transition:width 0.3s ease;
 }
 .nav-links a:hover{color:var(--text);}
+.nav-links a:hover::after{width:100%;}
 
 /* ── HERO ── */
 .hero{
@@ -72,8 +126,9 @@ nav{
   min-height:calc(100vh - 73px);
   padding:0 60px;
   max-width:700px;
+  position:relative;z-index:1;
 }
-.hero-left{animation:fadeUp 0.8s ease both;}
+
 .hero-tag{
   display:inline-flex;align-items:center;gap:8px;
   background:rgba(0,198,255,0.1);
@@ -82,6 +137,8 @@ nav{
   font-size:12px;color:var(--accent);
   letter-spacing:1px;text-transform:uppercase;
   margin-bottom:28px;
+  opacity:0;transform:translateY(20px);
+  animation:fadeUp 0.6s 0.1s ease forwards;
 }
 .hero-tag::before{
   content:'';width:6px;height:6px;border-radius:50%;
@@ -96,12 +153,11 @@ nav{
   letter-spacing:-1px;margin-bottom:16px;
 }
 
-/* "Bonjour, je suis" — per-character wave hover */
+/* Typewriter greeting */
 .greeting-wrap{
   display:inline-flex;flex-wrap:wrap;
-  gap:0 0.28em;
-  cursor:default;
-  margin-bottom:6px;
+  gap:0 0.28em;cursor:none;
+  margin-bottom:6px;min-height:1.2em;
 }
 .g-word{display:inline-flex;}
 .g-char{
@@ -111,17 +167,21 @@ nav{
   font-weight:800;line-height:1.05;letter-spacing:-1px;
   color:var(--text);
   transition:transform 0.2s cubic-bezier(.34,1.56,.64,1), color 0.2s ease;
+  opacity:0;
 }
+.g-char.visible{opacity:1;}
 .greeting-wrap:hover .g-char{color:rgba(255,255,255,0.35);}
 .greeting-wrap .g-char:hover{
   color:#fff !important;
   transform:translateY(-8px) scale(1.1);
 }
 
-/* "Anass." — shimmer + underline animée en dessous */
+/* "Anass." */
 .name-main{
-  display:inline-block;position:relative;cursor:default;
+  display:inline-block;position:relative;cursor:none;
   padding-bottom:6px;
+  opacity:0;transform:translateY(20px);
+  animation:fadeUp 0.7s 1.2s ease forwards;
 }
 .name-main-inner{
   background:linear-gradient(90deg,var(--accent),var(--accent2));
@@ -132,24 +192,18 @@ nav{
   position:relative;display:inline-block;overflow:hidden;
 }
 .name-main-inner::after{
-  content:'';
-  position:absolute;inset:0;
+  content:'';position:absolute;inset:0;
   background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,0.55) 50%,transparent 65%);
-  background-size:250% 100%;
-  background-position:250% 0;
+  background-size:250% 100%;background-position:250% 0;
   -webkit-background-clip:text;background-clip:text;
-  transition:background-position 0s;
-  pointer-events:none;
+  transition:background-position 0s;pointer-events:none;
 }
 .name-main:hover .name-main-inner::after{
   background-position:-250% 0;
   transition:background-position 0.65s ease;
 }
-/* underline visible en permanence, s'élargit au hover */
 .name-main::before{
-  content:'';
-  position:absolute;
-  bottom:0;left:0;
+  content:'';position:absolute;bottom:0;left:0;
   width:40%;height:3px;
   background:linear-gradient(90deg,var(--accent),var(--accent2));
   border-radius:3px;
@@ -157,6 +211,182 @@ nav{
   opacity:0.5;
 }
 .name-main:hover::before{width:100%;opacity:1;}
+
+.hero-desc{
+  font-size:14px;color:var(--muted);line-height:1.7;
+  max-width:420px;margin-bottom:30px;font-weight:300;
+  opacity:0;transform:translateY(20px);
+  animation:fadeUp 0.6s 1.5s ease forwards;
+}
+.hero-cta{
+  display:flex;gap:14px;align-items:center;flex-wrap:wrap;
+  opacity:0;transform:translateY(20px);
+  animation:fadeUp 0.6s 1.7s ease forwards;
+}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;border:none;padding:12px 24px;
+  border-radius:50px;font-size:13px;font-weight:500;
+  cursor:none;text-decoration:none;
+  transition:transform 0.2s,box-shadow 0.2s;letter-spacing:0.3px;
+  position:relative;overflow:hidden;
+}
+.btn-primary::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.3) 50%,transparent 60%);
+  background-size:300% 100%;background-position:300% 0;
+  transition:background-position 0.5s ease;
+}
+.btn-primary:hover::before{background-position:-300% 0;}
+.btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 30px rgba(0,114,255,0.4);
+}
+.btn-outline{
+  display:inline-flex;align-items:center;gap:8px;
+  background:transparent;color:var(--text);
+  border:1px solid rgba(255,255,255,0.2);
+  padding:11px 24px;border-radius:50px;
+  font-size:13px;font-weight:400;
+  cursor:none;text-decoration:none;transition:all 0.2s;
+}
+.btn-outline:hover{
+  border-color:rgba(255,255,255,0.5);
+  background:rgba(255,255,255,0.05);
+}
+
+/* ── STATS ── */
+.hero-stats{
+  display:flex;gap:32px;margin-top:36px;
+  padding-top:28px;
+  border-top:1px solid rgba(255,255,255,0.08);
+  opacity:0;transform:translateY(20px);
+  animation:fadeUp 0.6s 1.9s ease forwards;
+}
+.stat-item span:first-child{
+  display:block;font-family:'Syne',sans-serif;
+  font-size:24px;font-weight:700;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.stat-item span:last-child{font-size:11px;color:var(--muted);letter-spacing:0.5px;}
+
+/* ── ATELIERS ── */
+.ateliers-section{
+  padding:80px 60px;
+  position:relative;z-index:1;
+}
+.section-title{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(24px,3vw,38px);font-weight:700;
+  text-align:center;margin-bottom:40px;
+  opacity:0;transform:translateY(30px);
+  transition:opacity 0.7s ease, transform 0.7s ease;
+}
+.section-title.in-view{opacity:1;transform:translateY(0);}
+
+.container{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:16px;
+}
+
+/* Atelier card with animated gradient border */
+.atelier{
+  background:rgba(255,255,255,0.04);
+  padding:24px 20px;border-radius:16px;
+  text-align:center;cursor:none;
+  border:1px solid rgba(255,255,255,0.06);
+  transition:transform 0.35s ease, background 0.35s ease, box-shadow 0.35s ease;
+  font-family:'Syne',sans-serif;font-size:14px;
+  font-weight:600;letter-spacing:0.5px;
+  opacity:0;transform:translateY(30px);
+  position:relative;overflow:hidden;
+}
+.atelier::before{
+  content:'';position:absolute;inset:-2px;
+  border-radius:17px;
+  background:conic-gradient(from var(--angle,0deg), var(--accent) 0%, var(--accent2) 25%, transparent 35%);
+  opacity:0;z-index:-1;
+  transition:opacity 0.3s;
+}
+.atelier:hover::before{opacity:1;}
+@property --angle{
+  syntax:'<angle>';
+  inherits:false;
+  initial-value:0deg;
+}
+.atelier:hover{
+  --angle:360deg;
+  animation:spin-border 1.8s linear infinite;
+  transform:translateY(-8px);
+  background:rgba(0,198,255,0.08);
+  box-shadow:0 16px 40px rgba(0,114,255,0.2);
+}
+@keyframes spin-border{
+  to{--angle:360deg;}
+  from{--angle:0deg;}
+}
+.atelier.show{opacity:1;transform:translateY(0);}
+.atelier:hover{transform:translateY(-8px);}
+
+/* Ripple on atelier click */
+.ripple{
+  position:absolute;border-radius:50%;
+  background:rgba(0,198,255,0.25);
+  transform:scale(0);animation:ripple-anim 0.6s ease-out;
+  pointer-events:none;
+}
+@keyframes ripple-anim{
+  to{transform:scale(4);opacity:0;}
+}
+
+/* ── EXERCICES ── */
+#exercices{
+  padding:0 60px 60px;
+  position:relative;z-index:1;
+}
+#exercices h3{
+  font-family:'Syne',sans-serif;
+  font-size:22px;font-weight:700;
+  margin-bottom:20px;color:var(--accent);
+}
+.exercice-card{
+  background:rgba(255,255,255,0.04);
+  margin:10px 0;padding:16px 20px;border-radius:12px;
+  border:1px solid rgba(255,255,255,0.06);
+  opacity:0;transform:translateX(-20px);
+  transition:opacity 0.4s, transform 0.4s, background 0.2s, border-color 0.2s;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.exercice-card.show{opacity:1;transform:translateX(0);}
+.exercice-card:hover{
+  background:rgba(255,255,255,0.07);
+  border-color:rgba(0,198,255,0.2);
+}
+.exercice-label{
+  display:flex;align-items:center;gap:10px;
+  font-size:14px;font-weight:500;flex:1;
+}
+.exercice-label::before{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:var(--accent);flex-shrink:0;
+  animation:pulse 2.5s infinite;
+}
+.exercice-links{display:flex;gap:8px;flex-shrink:0;}
+.link-btn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 14px;border-radius:20px;
+  font-size:12px;font-weight:500;
+  text-decoration:none;border:1px solid;
+  transition:all 0.2s;cursor:none;
+}
+.link-tp{color:var(--accent);border-color:rgba(0,198,255,0.3);background:rgba(0,198,255,0.08);}
+.link-tp:hover{background:rgba(0,198,255,0.2);border-color:rgba(0,198,255,0.6);}
+.link-rapport{color:#a78bfa;border-color:rgba(167,139,250,0.3);background:rgba(167,139,250,0.08);}
+.link-rapport:hover{background:rgba(167,139,250,0.2);border-color:rgba(167,139,250,0.6);}
+.link-btn svg{width:11px;height:11px;flex-shrink:0;}
 
 /* ── CONTACT MODAL ── */
 #contactModal{
@@ -180,20 +410,16 @@ nav{
   border:1px solid rgba(255,255,255,0.1);
   color:var(--muted);font-size:16px;
   display:flex;align-items:center;justify-content:center;
-  cursor:pointer;transition:all 0.2s;line-height:1;
+  cursor:none;transition:all 0.2s;line-height:1;
 }
 .cmodal-close:hover{background:rgba(255,255,255,0.14);color:#fff;}
-.cmodal h3{
-  font-family:'Syne',sans-serif;font-size:22px;font-weight:800;
-  margin-bottom:6px;
-}
+.cmodal h3{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:6px;}
 .cmodal h3 span{
   background:linear-gradient(90deg,var(--accent),var(--accent2));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
 .cmodal-subtitle{font-size:13px;color:var(--muted);margin-bottom:28px;}
 
-/* info tiles */
 .cinfo-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;}
 .cinfo-tile{
   background:rgba(255,255,255,0.05);
@@ -201,7 +427,7 @@ nav{
   border-radius:14px;padding:14px 16px;
   display:flex;align-items:center;gap:12px;
   text-decoration:none;color:var(--text);
-  transition:all 0.25s ease;
+  transition:all 0.25s ease;cursor:none;
 }
 .cinfo-tile:hover{
   background:rgba(0,198,255,0.1);
@@ -219,143 +445,6 @@ nav{
 .cinfo-label{font-size:11px;color:var(--muted);letter-spacing:0.4px;display:block;margin-bottom:2px;}
 .cinfo-value{font-size:13px;font-weight:500;}
 
-.hero-desc{
-  font-size:14px;color:var(--muted);line-height:1.7;
-  max-width:420px;margin-bottom:30px;font-weight:300;
-}
-.hero-cta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;}
-.btn-primary{
-  display:inline-flex;align-items:center;gap:8px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  color:#fff;border:none;padding:12px 24px;
-  border-radius:50px;font-size:13px;font-weight:500;
-  cursor:pointer;text-decoration:none;
-  transition:transform 0.2s,box-shadow 0.2s;letter-spacing:0.3px;
-}
-.btn-primary:hover{
-  transform:translateY(-2px);
-  box-shadow:0 12px 30px rgba(0,114,255,0.4);
-}
-.btn-outline{
-  display:inline-flex;align-items:center;gap:8px;
-  background:transparent;color:var(--text);
-  border:1px solid rgba(255,255,255,0.2);
-  padding:11px 24px;border-radius:50px;
-  font-size:13px;font-weight:400;
-  cursor:pointer;text-decoration:none;transition:all 0.2s;
-}
-.btn-outline:hover{
-  border-color:rgba(255,255,255,0.5);
-  background:rgba(255,255,255,0.05);
-}
-.hero-right{
-  display:flex;justify-content:center;align-items:center;
-  animation:fadeUp 0.8s 0.2s ease both;
-}
-.photo-frame{position:relative;width:300px;height:360px;}
-.photo-frame img{
-  width:100%;height:100%;object-fit:cover;
-  object-position:center top;border-radius:24px;
-  display:block;position:relative;z-index:2;
-}
-.photo-frame::before{
-  content:'';position:absolute;top:16px;left:16px;
-  width:100%;height:100%;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  border-radius:24px;z-index:1;opacity:0.35;
-}
-.photo-frame::after{
-  content:'';position:absolute;top:-8px;right:-8px;
-  width:60px;height:60px;
-  border:2px solid rgba(0,198,255,0.4);
-  border-radius:50%;z-index:3;
-}
-.hero-stats{
-  display:flex;gap:32px;margin-top:36px;
-  padding-top:28px;
-  border-top:1px solid rgba(255,255,255,0.08);
-}
-.stat-item span:first-child{
-  display:block;font-family:'Syne',sans-serif;
-  font-size:24px;font-weight:700;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.stat-item span:last-child{font-size:11px;color:var(--muted);letter-spacing:0.5px;}
-
-/* ── ATELIERS ── */
-.ateliers-section{padding:80px 60px;}
-.section-title{
-  font-family:'Syne',sans-serif;
-  font-size:clamp(24px,3vw,38px);font-weight:700;
-  text-align:center;margin-bottom:40px;
-}
-.container{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:16px;
-}
-.atelier{
-  background:rgba(255,255,255,0.05);
-  padding:24px 20px;border-radius:16px;
-  text-align:center;cursor:pointer;
-  border:1px solid rgba(255,255,255,0.06);
-  transition:all 0.35s ease;
-  font-family:'Syne',sans-serif;font-size:14px;
-  font-weight:600;letter-spacing:0.5px;
-  opacity:0;transform:translateY(30px);
-}
-.atelier.show{opacity:1;transform:translateY(0);}
-.atelier:hover{
-  transform:translateY(-8px);
-  background:rgba(0,198,255,0.1);
-  border-color:rgba(0,198,255,0.3);
-  box-shadow:0 16px 40px rgba(0,114,255,0.2);
-}
-
-/* ── EXERCICES ── */
-#exercices{padding:0 60px 60px;}
-#exercices h3{
-  font-family:'Syne',sans-serif;
-  font-size:22px;font-weight:700;
-  margin-bottom:20px;color:var(--accent);
-}
-.exercice-card{
-  background:rgba(255,255,255,0.04);
-  margin:10px 0;
-  padding:16px 20px;border-radius:12px;
-  border:1px solid rgba(255,255,255,0.06);
-  opacity:0;transform:translateX(-20px);
-  transition:opacity 0.3s, transform 0.3s, background 0.2s, border-color 0.2s;
-  display:flex;align-items:center;justify-content:space-between;gap:16px;
-}
-.exercice-card.show{opacity:1;transform:translateX(0);}
-.exercice-card:hover{
-  background:rgba(255,255,255,0.07);
-  border-color:rgba(0,198,255,0.2);
-}
-.exercice-label{
-  display:flex;align-items:center;gap:10px;
-  font-size:14px;font-weight:500;flex:1;
-}
-.exercice-label::before{
-  content:'';width:6px;height:6px;border-radius:50%;
-  background:var(--accent);flex-shrink:0;
-}
-.exercice-links{display:flex;gap:8px;flex-shrink:0;}
-.link-btn{
-  display:inline-flex;align-items:center;gap:5px;
-  padding:6px 14px;border-radius:20px;
-  font-size:12px;font-weight:500;
-  text-decoration:none;border:1px solid;
-  transition:all 0.2s;cursor:pointer;
-}
-.link-tp{color:var(--accent);border-color:rgba(0,198,255,0.3);background:rgba(0,198,255,0.08);}
-.link-tp:hover{background:rgba(0,198,255,0.2);border-color:rgba(0,198,255,0.6);}
-.link-rapport{color:#a78bfa;border-color:rgba(167,139,250,0.3);background:rgba(167,139,250,0.08);}
-.link-rapport:hover{background:rgba(167,139,250,0.2);border-color:rgba(167,139,250,0.6);}
-.link-btn svg{width:11px;height:11px;flex-shrink:0;}
-
 /* ── MODAL EDIT ── */
 #modal{
   display:none;position:fixed;top:0;left:0;
@@ -368,6 +457,7 @@ nav{
   margin:80px auto;padding:32px;border-radius:20px;
   border:1px solid rgba(255,255,255,0.1);
   box-shadow:0 30px 80px rgba(0,0,0,0.5);
+  animation:fadeUp 0.35s cubic-bezier(.22,1,.36,1) both;
 }
 .modal-content h3{
   font-family:'Syne',sans-serif;font-size:18px;font-weight:700;
@@ -384,7 +474,7 @@ input{
   border:1px solid rgba(255,255,255,0.12);
   border-radius:10px;padding:10px 14px;color:#fff;
   font-size:13px;font-family:'Inter',sans-serif;
-  outline:none;transition:border-color 0.2s;
+  outline:none;transition:border-color 0.2s;cursor:none;
 }
 input:focus{border-color:var(--accent);}
 input::placeholder{color:rgba(255,255,255,0.3);}
@@ -392,7 +482,7 @@ input::placeholder{color:rgba(255,255,255,0.3);}
   padding:10px 14px;
   background:linear-gradient(135deg,var(--accent),var(--accent2));
   border:none;border-radius:10px;color:#fff;font-size:12px;
-  cursor:pointer;white-space:nowrap;transition:opacity 0.2s;
+  cursor:none;white-space:nowrap;transition:opacity 0.2s;
   font-family:'Inter',sans-serif;
 }
 .btn-small:hover{opacity:0.85;}
@@ -404,32 +494,48 @@ input::placeholder{color:rgba(255,255,255,0.3);}
   flex:1;padding:11px;
   background:linear-gradient(135deg,var(--accent),var(--accent2));
   border:none;border-radius:10px;color:#fff;
-  font-size:13px;font-weight:500;cursor:pointer;
+  font-size:13px;font-weight:500;cursor:none;
   transition:all 0.2s;font-family:'Inter',sans-serif;
 }
 .btn-save:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,114,255,0.4);}
 .btn-del{
   padding:11px 16px;background:rgba(255,80,80,0.12);
   border:1px solid rgba(255,80,80,0.2);border-radius:10px;
-  color:#ff6060;font-size:13px;cursor:pointer;
+  color:#ff6060;font-size:13px;cursor:none;
   transition:all 0.2s;font-family:'Inter',sans-serif;
 }
 .btn-del:hover{background:rgba(255,80,80,0.22);}
 .btn-close{
   padding:11px 16px;background:rgba(255,255,255,0.06);
   border:1px solid rgba(255,255,255,0.1);border-radius:10px;
-  color:var(--muted);font-size:13px;cursor:pointer;
+  color:var(--muted);font-size:13px;cursor:none;
   font-family:'Inter',sans-serif;
 }
 
+/* ── KEYFRAMES ── */
 @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+@keyframes floatY{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
+
+/* ── SCROLL TO TOP ── */
+#scrollTop{
+  position:fixed;bottom:32px;right:32px;
+  width:40px;height:40px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border:none;color:#fff;font-size:18px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:none;z-index:200;
+  opacity:0;transform:translateY(20px);
+  transition:opacity 0.3s, transform 0.3s;
+  box-shadow:0 4px 20px rgba(0,114,255,0.4);
+}
+#scrollTop.visible{opacity:1;transform:translateY(0);}
+#scrollTop:hover{transform:translateY(-4px) scale(1.1);}
 
 @media(max-width:768px){
   nav{padding:16px 20px;}
+  nav.scrolled{padding:12px 20px;}
   .hero{grid-template-columns:1fr;padding:40px 20px;gap:40px;text-align:center;min-height:auto;}
-  .hero-right{order:-1;}
-  .photo-frame{width:200px;height:240px;}
   .hero-desc{max-width:100%;}
   .hero-cta{justify-content:center;}
   .hero-stats{justify-content:center;}
@@ -437,12 +543,29 @@ input::placeholder{color:rgba(255,255,255,0.3);}
   #exercices{padding:0 20px 30px;}
   .exercice-card{flex-direction:column;align-items:flex-start;gap:10px;}
   .greeting-wrap{justify-content:center;}
+  .cursor,.cursor-ring{display:none;}
+  body{cursor:auto;}
+  input{cursor:text;}
+  a,button,.atelier,.cinfo-tile,.link-btn,.btn-primary,.btn-outline{cursor:pointer;}
 }
 </style>
 </head>
 <body>
 
-<nav>
+<!-- Scroll progress bar -->
+<div id="scrollProgress"></div>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Particle canvas -->
+<canvas id="bgCanvas"></canvas>
+
+<!-- Scroll to top -->
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<nav id="mainNav">
   <div class="nav-logo">ANASS LAHMAR</div>
   <ul class="nav-links">
     <li><a href="#ateliers">Projets</a></li>
@@ -465,8 +588,8 @@ input::placeholder{color:rgba(255,255,255,0.3);}
       <a href="#" class="btn-outline" onclick="event.preventDefault();openContactModal()">Me contacter</a>
     </div>
     <div class="hero-stats">
-      <div class="stat-item"><span>20</span><span>Ateliers</span></div>
-      <div class="stat-item"><span>160+</span><span>Exercices</span></div>
+      <div class="stat-item"><span class="counter" data-target="20">0</span><span>Ateliers</span></div>
+      <div class="stat-item"><span class="counter" data-target="160">0</span><span>Exercices</span></div>
       <div class="stat-item"><span>OFPPT</span><span>Tanger</span></div>
     </div>
   </div>
@@ -490,28 +613,19 @@ input::placeholder{color:rgba(255,255,255,0.3);}
         <div class="cinfo-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
         </div>
-        <div>
-          <span class="cinfo-label">Email</span>
-          <span class="cinfo-value">Anaslhm76@gmail.com</span>
-        </div>
+        <div><span class="cinfo-label">Email</span><span class="cinfo-value">Anaslhm76@gmail.com</span></div>
       </a>
       <a class="cinfo-tile" href="tel:0777852536">
         <div class="cinfo-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.9v2.02z"/></svg>
         </div>
-        <div>
-          <span class="cinfo-label">Téléphone</span>
-          <span class="cinfo-value">0777 852 536</span>
-        </div>
+        <div><span class="cinfo-label">Téléphone</span><span class="cinfo-value">0777 852 536</span></div>
       </a>
       <div class="cinfo-tile full" style="cursor:default;">
         <div class="cinfo-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
         </div>
-        <div>
-          <span class="cinfo-label">Localisation</span>
-          <span class="cinfo-value">Tanger, Maroc</span>
-        </div>
+        <div><span class="cinfo-label">Localisation</span><span class="cinfo-value">Tanger, Maroc</span></div>
       </div>
     </div>
   </div>
@@ -544,27 +658,209 @@ input::placeholder{color:rgba(255,255,255,0.3);}
 </div>
 
 <script>
-/* ── CONTACT MODAL ── */
-function openContactModal(){document.getElementById('contactModal').classList.add('open');}
-function closeContactModal(){document.getElementById('contactModal').classList.remove('open');}
-function contactOverlayClick(e){if(e.target.id==='contactModal')closeContactModal();}
+/* ══════════════════════════════════
+   CUSTOM CURSOR
+══════════════════════════════════ */
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
 
-/* ── GREETING: per-char hover ── */
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx+'px';
+  cursor.style.top = my+'px';
+});
+
+function animRing(){
+  rx += (mx-rx)*0.12;
+  ry += (my-ry)*0.12;
+  ring.style.left = rx+'px';
+  ring.style.top = ry+'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+const hoverables = 'a, button, .atelier, .cinfo-tile, .link-btn, .btn-primary, .btn-outline, .nav-logo';
+document.addEventListener('mouseover', e => {
+  if(e.target.closest(hoverables)){ring.classList.add('hovered');}
+});
+document.addEventListener('mouseout', e => {
+  if(e.target.closest(hoverables)){ring.classList.remove('hovered');}
+});
+
+/* ══════════════════════════════════
+   SCROLL PROGRESS + NAV
+══════════════════════════════════ */
+const prog = document.getElementById('scrollProgress');
+const nav = document.getElementById('mainNav');
+const scrollTopBtn = document.getElementById('scrollTop');
+
+window.addEventListener('scroll', () => {
+  const total = document.body.scrollHeight - window.innerHeight;
+  const pct = (window.scrollY / total) * 100;
+  prog.style.width = pct + '%';
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+  scrollTopBtn.classList.toggle('visible', window.scrollY > 300);
+});
+
+/* ══════════════════════════════════
+   PARTICLES
+══════════════════════════════════ */
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [];
+
+function resizeCanvas(){
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+function createParticle(){
+  return {
+    x: Math.random()*W,
+    y: Math.random()*H,
+    vx: (Math.random()-0.5)*0.3,
+    vy: (Math.random()-0.5)*0.3,
+    r: Math.random()*1.8+0.4,
+    alpha: Math.random()*0.5+0.1,
+    pulse: Math.random()*Math.PI*2
+  };
+}
+
+for(let i=0;i<80;i++) particles.push(createParticle());
+
+function drawParticles(){
+  ctx.clearRect(0,0,W,H);
+  const t = Date.now()*0.001;
+
+  // connection lines
+  for(let i=0;i<particles.length;i++){
+    for(let j=i+1;j<particles.length;j++){
+      const dx=particles[i].x-particles[j].x;
+      const dy=particles[i].y-particles[j].y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<110){
+        ctx.beginPath();
+        ctx.strokeStyle=`rgba(0,198,255,${0.08*(1-dist/110)})`;
+        ctx.lineWidth=0.5;
+        ctx.moveTo(particles[i].x,particles[i].y);
+        ctx.lineTo(particles[j].x,particles[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+
+  particles.forEach(p => {
+    p.x += p.vx; p.y += p.vy;
+    p.pulse += 0.02;
+    if(p.x<0||p.x>W) p.vx*=-1;
+    if(p.y<0||p.y>H) p.vy*=-1;
+    const a = p.alpha*(0.7+0.3*Math.sin(p.pulse));
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(0,198,255,${a})`;
+    ctx.fill();
+  });
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+/* ══════════════════════════════════
+   TYPEWRITER GREETING
+══════════════════════════════════ */
 const GREETING = 'Bonjour, je suis';
 const gw = document.getElementById('greetingWrap');
-GREETING.split(' ').forEach((word, wi) => {
+const allChars = [];
+
+GREETING.split(' ').forEach(word => {
   const wDiv = document.createElement('span');
   wDiv.className = 'g-word';
-  word.split('').forEach((ch, ci) => {
+  word.split('').forEach(ch => {
     const s = document.createElement('span');
     s.className = 'g-char';
     s.textContent = ch;
     wDiv.appendChild(s);
+    allChars.push(s);
   });
   gw.appendChild(wDiv);
 });
 
-/* ── ATELIERS ── */
+// Animate each char in sequence after 0.3s delay
+allChars.forEach((c, i) => {
+  setTimeout(() => {
+    c.classList.add('visible');
+    c.style.transition = 'opacity 0.2s ease, transform 0.2s cubic-bezier(.34,1.56,.64,1), color 0.2s ease';
+    c.style.transform = 'translateY(-6px)';
+    setTimeout(()=>{ c.style.transform='translateY(0)'; }, 150);
+  }, 400 + i * 55);
+});
+
+/* hover wave stays */
+gw.addEventListener('mouseover', e => {
+  if(e.target.classList.contains('g-char')){
+    const idx = allChars.indexOf(e.target);
+    allChars.forEach((c,i)=>{
+      const d = Math.abs(i-idx);
+      if(d<=2){
+        setTimeout(()=>{
+          c.style.transform=`translateY(${-6+d*2}px) scale(${1.1-d*0.03})`;
+          setTimeout(()=>{c.style.transform='';},300);
+        },d*40);
+      }
+    });
+  }
+});
+
+/* ══════════════════════════════════
+   COUNTER ANIMATION
+══════════════════════════════════ */
+function animateCounter(el){
+  const target = +el.dataset.target;
+  const suffix = target===160 ? '+' : '';
+  const duration = 1400;
+  const step = 16;
+  const steps = duration/step;
+  let current = 0;
+  const inc = target/steps;
+  const timer = setInterval(()=>{
+    current += inc;
+    if(current >= target){current=target;clearInterval(timer);}
+    el.textContent = Math.floor(current)+suffix;
+  }, step);
+}
+
+// Trigger counters when stats section enters view
+const counters = document.querySelectorAll('.counter');
+const counterObserver = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      animateCounter(e.target);
+      counterObserver.unobserve(e.target);
+    }
+  });
+},{threshold:0.5});
+counters.forEach(c=>counterObserver.observe(c));
+
+/* ══════════════════════════════════
+   SECTION TITLE REVEAL
+══════════════════════════════════ */
+const titleObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in-view');});
+},{threshold:0.2});
+document.querySelectorAll('.section-title').forEach(t=>titleObs.observe(t));
+
+/* ══════════════════════════════════
+   CONTACT MODAL
+══════════════════════════════════ */
+function openContactModal(){document.getElementById('contactModal').classList.add('open');}
+function closeContactModal(){document.getElementById('contactModal').classList.remove('open');}
+function contactOverlayClick(e){if(e.target.id==='contactModal')closeContactModal();}
+
+/* ══════════════════════════════════
+   ATELIERS
+══════════════════════════════════ */
 const ATELIERS = 20;
 const EXERCICES_PAR_ATELIER = 8;
 let currentKey = '';
@@ -574,94 +870,110 @@ const extIcon = `<svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2
 </svg>`;
 
 const grid = document.getElementById('atelierGrid');
-for (let i = 1; i <= ATELIERS; i++) {
-  const name = 'Atelier ' + i;
-  const d = document.createElement('div');
-  d.className = 'atelier';
-  d.textContent = name;
-  d.onclick = () => openAtelier(name);
+for(let i=1;i<=ATELIERS;i++){
+  const name='Atelier '+i;
+  const d=document.createElement('div');
+  d.className='atelier';
+  d.textContent=name;
+  d.onclick = e => {
+    // ripple
+    const rect=d.getBoundingClientRect();
+    const rip=document.createElement('span');
+    rip.className='ripple';
+    const size=Math.max(d.offsetWidth,d.offsetHeight)*2;
+    rip.style.cssText=`width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px;`;
+    d.appendChild(rip);
+    setTimeout(()=>rip.remove(),600);
+    openAtelier(name);
+  };
   grid.appendChild(d);
 }
 
-function openAtelier(name) {
-  const box = document.getElementById('exercices');
-  box.innerHTML = '<h3>' + name + '</h3>';
-  for (let j = 1; j <= EXERCICES_PAR_ATELIER; j++) {
-    const exName = 'Exercice ' + j;
-    const key = name + '_' + exName;
-    const tpLink = localStorage.getItem(key + '_tp') || '';
-    const rapportLink = localStorage.getItem(key + '_rapport') || '';
-    const card = document.createElement('div');
-    card.className = 'exercice-card';
-    card.dataset.key = key;
-    card.innerHTML = `
+function openAtelier(name){
+  const box=document.getElementById('exercices');
+  box.innerHTML='<h3>'+name+'</h3>';
+  for(let j=1;j<=EXERCICES_PAR_ATELIER;j++){
+    const exName='Exercice '+j;
+    const key=name+'_'+exName;
+    const tpLink=localStorage.getItem(key+'_tp')||'';
+    const rapportLink=localStorage.getItem(key+'_rapport')||'';
+    const card=document.createElement('div');
+    card.className='exercice-card';
+    card.dataset.key=key;
+    card.innerHTML=`
       <div class="exercice-label">${exName}</div>
       <div class="exercice-links">
-        <a class="link-btn link-tp" ${tpLink ? 'href="' + tpLink + '" target="_blank"' : 'href="#"'}
-           onclick="handleLinkClick(event, '${key}', 'tp')">${extIcon} TP</a>
-        <a class="link-btn link-rapport" ${rapportLink ? 'href="' + rapportLink + '" target="_blank"' : 'href="#"'}
-           onclick="handleLinkClick(event, '${key}', 'rapport')">${extIcon} Rapport</a>
+        <a class="link-btn link-tp" ${tpLink?'href="'+tpLink+'" target="_blank"':'href="#"'}
+           onclick="handleLinkClick(event,'${key}','tp')">${extIcon} TP</a>
+        <a class="link-btn link-rapport" ${rapportLink?'href="'+rapportLink+'" target="_blank"':'href="#"'}
+           onclick="handleLinkClick(event,'${key}','rapport')">${extIcon} Rapport</a>
       </div>`;
     box.appendChild(card);
+
+    // staggered slide-in
+    setTimeout(()=>card.classList.add('show'), j*60);
   }
-  box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  box.scrollIntoView({behavior:'smooth',block:'start'});
   observeElements();
 }
 
-function handleLinkClick(e, key, type) {
-  const link = localStorage.getItem(key + '_' + type);
-  if (!link) { e.preventDefault(); openModal(key); }
+function handleLinkClick(e,key,type){
+  const link=localStorage.getItem(key+'_'+type);
+  if(!link){e.preventDefault();openModal(key);}
 }
 
-function openModal(key) {
-  currentKey = key;
-  const parts = key.split('_');
-  document.getElementById('modalTitle').textContent = parts[0] + ' ' + parts[1] + ' — ' + parts[2] + ' ' + parts[3];
-  document.getElementById('modal').style.display = 'block';
-  document.getElementById('tpLink').value = localStorage.getItem(key + '_tp') || '';
-  document.getElementById('rapportLink').value = localStorage.getItem(key + '_rapport') || '';
+function openModal(key){
+  currentKey=key;
+  const parts=key.split('_');
+  document.getElementById('modalTitle').textContent=parts[0]+' '+parts[1]+' — '+parts[2]+' '+parts[3];
+  document.getElementById('modal').style.display='block';
+  document.getElementById('tpLink').value=localStorage.getItem(key+'_tp')||'';
+  document.getElementById('rapportLink').value=localStorage.getItem(key+'_rapport')||'';
 }
 
-function saveData() {
-  const tp = document.getElementById('tpLink').value.trim();
-  const rapport = document.getElementById('rapportLink').value.trim();
-  if (tp) localStorage.setItem(currentKey + '_tp', tp);
-  else localStorage.removeItem(currentKey + '_tp');
-  if (rapport) localStorage.setItem(currentKey + '_rapport', rapport);
-  else localStorage.removeItem(currentKey + '_rapport');
-  const card = document.querySelector('[data-key="' + currentKey + '"]');
-  if (card) {
-    const links = card.querySelectorAll('.link-btn');
-    const tpBtn = links[0], rapBtn = links[1];
-    if (tp) { tpBtn.href = tp; tpBtn.target = '_blank'; tpBtn.onclick = null; }
-    else { tpBtn.href = '#'; tpBtn.removeAttribute('target'); tpBtn.onclick = (e) => handleLinkClick(e, currentKey, 'tp'); }
-    if (rapport) { rapBtn.href = rapport; rapBtn.target = '_blank'; rapBtn.onclick = null; }
-    else { rapBtn.href = '#'; rapBtn.removeAttribute('target'); rapBtn.onclick = (e) => handleLinkClick(e, currentKey, 'rapport'); }
+function saveData(){
+  const tp=document.getElementById('tpLink').value.trim();
+  const rapport=document.getElementById('rapportLink').value.trim();
+  if(tp)localStorage.setItem(currentKey+'_tp',tp);
+  else localStorage.removeItem(currentKey+'_tp');
+  if(rapport)localStorage.setItem(currentKey+'_rapport',rapport);
+  else localStorage.removeItem(currentKey+'_rapport');
+  const card=document.querySelector('[data-key="'+currentKey+'"]');
+  if(card){
+    const links=card.querySelectorAll('.link-btn');
+    const tpBtn=links[0],rapBtn=links[1];
+    if(tp){tpBtn.href=tp;tpBtn.target='_blank';tpBtn.onclick=null;}
+    else{tpBtn.href='#';tpBtn.removeAttribute('target');tpBtn.onclick=(e)=>handleLinkClick(e,currentKey,'tp');}
+    if(rapport){rapBtn.href=rapport;rapBtn.target='_blank';rapBtn.onclick=null;}
+    else{rapBtn.href='#';rapBtn.removeAttribute('target');rapBtn.onclick=(e)=>handleLinkClick(e,currentKey,'rapport');}
   }
   closeModal();
 }
 
-function deleteData() {
-  localStorage.removeItem(currentKey + '_tp');
-  localStorage.removeItem(currentKey + '_rapport');
-  document.getElementById('tpLink').value = '';
-  document.getElementById('rapportLink').value = '';
+function deleteData(){
+  localStorage.removeItem(currentKey+'_tp');
+  localStorage.removeItem(currentKey+'_rapport');
+  document.getElementById('tpLink').value='';
+  document.getElementById('rapportLink').value='';
 }
 
-function openModalLink(type) {
-  const link = localStorage.getItem(currentKey + '_' + type);
-  if (link) window.open(link, '_blank');
+function openModalLink(type){
+  const link=localStorage.getItem(currentKey+'_'+type);
+  if(link)window.open(link,'_blank');
 }
 
-function closeModal() { document.getElementById('modal').style.display = 'none'; }
-function outsideClick(e) { if (e.target.id === 'modal') closeModal(); }
+function closeModal(){document.getElementById('modal').style.display='none';}
+function outsideClick(e){if(e.target.id==='modal')closeModal();}
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
-}, { threshold: 0.05 });
+/* ══════════════════════════════════
+   INTERSECTION OBSERVER (cards + ateliers)
+══════════════════════════════════ */
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show');});
+},{threshold:0.05});
 
-function observeElements() {
-  document.querySelectorAll('.atelier, .exercice-card').forEach(el => observer.observe(el));
+function observeElements(){
+  document.querySelectorAll('.atelier, .exercice-card').forEach(el=>observer.observe(el));
 }
 window.addEventListener('load', observeElements);
 </script>
