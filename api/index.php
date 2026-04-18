@@ -2,52 +2,46 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Portfolio - Anass Lahmar</title>
+<title>Portfolio - Nito</title>
 
 <style>
 body{
   margin:0;
-  font-family:'Poppins', sans-serif;
+  font-family:system-ui, Arial, sans-serif;
   background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
   color:white;
   overflow-x:hidden;
 }
 
-/* NAVBAR PRO */
+/* NAV */
 nav{
   display:flex;
-  justify-content:space-between;
+  justify-content:center;
   align-items:center;
-  padding:18px 40px;
+  padding:25px 40px;
   background:rgba(255,255,255,0.05);
   backdrop-filter:blur(15px);
 }
 
 .nav-center{
   text-align:center;
-  flex:1;
-  animation:fadeDown 1s ease;
 }
 
 .nav-center h1{
   margin:0;
-  font-size:26px;
+  font-size:30px;
   letter-spacing:2px;
   font-weight:600;
   text-transform:uppercase;
 }
 
 .nav-center span{
+  display:block;
+  margin-top:6px;
   font-size:12px;
+  letter-spacing:4px;
   opacity:0.7;
-  letter-spacing:3px;
   text-transform:uppercase;
-}
-
-/* HEADER */
-header{
-  text-align:center;
-  padding:60px 20px;
 }
 
 /* GRID */
@@ -131,10 +125,16 @@ button:hover{
   background:#0072ff;
 }
 
-/* ANIMATION */
-@keyframes fadeDown{
-  from{opacity:0; transform:translateY(-30px);}
-  to{opacity:1; transform:translateY(0);}
+/* SCROLL ANIMATION */
+.atelier, .exercice{
+  opacity:0;
+  transform:translateY(40px);
+  transition:all 0.6s ease;
+}
+
+.show{
+  opacity:1;
+  transform:translateY(0);
 }
 </style>
 </head>
@@ -142,20 +142,12 @@ button:hover{
 <body>
 
 <nav>
-  <div></div>
-
   <div class="nav-center">
-    <h1>Anass Lahmar</h1>
-    <span>Portfolio Professionnel</span>
+    <h1>Nito</h1>
+    <span>Mon Portfolio</span>
+    <span>TPs et Rapports</span>
   </div>
-
-  <div></div>
 </nav>
-
-<header>
-  <h2>Mon Portfolio</h2>
-  <p>TP & Rapports avec liens</p>
-</header>
 
 <div class="container">
   <div class="atelier" onclick="openAtelier('Atelier 1')">Atelier 1</div>
@@ -214,6 +206,7 @@ const data = {
 
 let currentKey="";
 
+/* OPEN */
 function openAtelier(name){
 let box=document.getElementById("exercices");
 box.innerHTML="<h3>"+name+"</h3>";
@@ -225,6 +218,8 @@ div.innerText=ex;
 div.onclick=()=>openExercise(name,ex);
 box.appendChild(div);
 });
+
+observeElements();
 }
 
 function openExercise(a,ex){
@@ -236,6 +231,7 @@ document.getElementById("tpLink").value=localStorage.getItem(currentKey+"_tp")||
 document.getElementById("rapportLink").value=localStorage.getItem(currentKey+"_rapport")||"";
 }
 
+/* STORAGE */
 function saveData(){
 localStorage.setItem(currentKey+"_tp",document.getElementById("tpLink").value);
 localStorage.setItem(currentKey+"_rapport",document.getElementById("rapportLink").value);
@@ -249,6 +245,7 @@ document.getElementById("tpLink").value="";
 document.getElementById("rapportLink").value="";
 }
 
+/* MODAL */
 function openLink(type){
 let link=localStorage.getItem(currentKey+"_"+type);
 if(link) window.open(link,"_blank");
@@ -262,6 +259,23 @@ document.getElementById("modal").style.display="none";
 function outsideClick(e){
 if(e.target.id==="modal") closeModal();
 }
+
+/* SCROLL ANIMATION */
+const observer=new IntersectionObserver((entries)=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("show");
+}
+});
+},{threshold:0.15});
+
+function observeElements(){
+document.querySelectorAll(".atelier, .exercice").forEach(el=>{
+observer.observe(el);
+});
+}
+
+window.addEventListener("load",observeElements);
 </script>
 
 </body>
