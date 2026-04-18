@@ -5,79 +5,105 @@
 <title>Portfolio - ANASS LAHMAR</title>
 
 <style>
+:root{
+  --bg1:#0f2027;
+  --bg2:#203a43;
+  --bg3:#2c5364;
+  --card:rgba(255,255,255,0.08);
+  --text:white;
+  --accent:#00c6ff;
+}
+
+body.light{
+  --bg1:#e8f0ff;
+  --bg2:#dbe7ff;
+  --bg3:#cfe0ff;
+  --card:rgba(0,0,0,0.08);
+  --text:#111;
+  --accent:#0072ff;
+}
+
 body{
   margin:0;
   font-family:system-ui, Arial, sans-serif;
-  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-  color:white;
+  background:linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));
+  color:var(--text);
   overflow-x:hidden;
+  transition:0.4s;
 }
 
 /* NAV */
 nav{
   display:flex;
-  justify-content:center;
+  justify-content:space-between;
   align-items:center;
-  padding:25px 40px;
+  padding:20px 30px;
   background:rgba(255,255,255,0.05);
   backdrop-filter:blur(15px);
 }
 
 .nav-center{
   text-align:center;
+  flex:1;
 }
 
-.nav-center h1{
+h1{
   margin:0;
-  font-size:30px;
+  font-size:28px;
   letter-spacing:2px;
-  font-weight:600;
-  text-transform:uppercase;
 }
 
-.nav-center span{
-  display:block;
-  margin-top:6px;
-  font-size:12px;
-  letter-spacing:4px;
-  opacity:0.7;
-  text-transform:uppercase;
+/* BUTTON THEME */
+.theme-btn{
+  padding:8px 12px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  background:var(--accent);
+  color:white;
+  transition:0.3s;
+}
+
+.theme-btn:hover{
+  transform:scale(1.05);
 }
 
 /* GRID */
 .container{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:25px;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:20px;
   padding:30px;
 }
 
 .atelier{
-  background:rgba(255,255,255,0.08);
-  padding:25px;
-  border-radius:20px;
+  background:var(--card);
+  padding:20px;
+  border-radius:15px;
   text-align:center;
   cursor:pointer;
   backdrop-filter:blur(12px);
-  transition:0.4s;
+  transition:0.3s;
+  border:1px solid rgba(255,255,255,0.1);
 }
 
 .atelier:hover{
-  transform:translateY(-10px) scale(1.05);
-  box-shadow:0 20px 40px rgba(0,0,0,0.5);
+  transform:translateY(-8px);
+  box-shadow:0 15px 30px rgba(0,0,0,0.3);
 }
 
+/* EXERCICE */
 .exercice{
-  background:rgba(255,255,255,0.08);
-  margin:12px 0;
-  padding:14px;
+  background:var(--card);
+  margin:10px 0;
+  padding:12px;
   border-radius:10px;
   cursor:pointer;
   transition:0.3s;
 }
 
 .exercice:hover{
-  transform:translateX(8px);
+  transform:translateX(6px);
   background:rgba(255,255,255,0.2);
 }
 
@@ -87,49 +113,50 @@ nav{
   position:fixed;
   top:0;left:0;
   width:100%;height:100%;
-  background:rgba(0,0,0,0.8);
-  backdrop-filter:blur(6px);
+  background:rgba(0,0,0,0.75);
 }
 
 .modal-content{
-  background:rgba(255,255,255,0.1);
+  background:var(--card);
   backdrop-filter:blur(20px);
   width:90%;
-  max-width:500px;
+  max-width:450px;
   margin:100px auto;
-  padding:25px;
+  padding:20px;
   border-radius:15px;
+  color:var(--text);
 }
 
+/* INPUTS */
 input{
   width:100%;
   padding:10px;
-  margin:10px 0;
+  margin:8px 0;
   border:none;
   border-radius:8px;
 }
 
+/* BUTTONS */
 button{
-  padding:10px 15px;
+  padding:10px 12px;
   border:none;
   border-radius:8px;
-  background:#00c6ff;
+  background:var(--accent);
   color:white;
   cursor:pointer;
   transition:0.3s;
-  margin:5px 3px;
+  margin:4px;
 }
 
 button:hover{
   transform:scale(1.05);
-  background:#0072ff;
 }
 
 /* ANIMATION */
-.atelier, .exercice{
+.atelier,.exercice{
   opacity:0;
-  transform:translateY(40px);
-  transition:all 0.6s ease;
+  transform:translateY(30px);
+  transition:0.5s ease;
 }
 
 .show{
@@ -142,11 +169,14 @@ button:hover{
 <body>
 
 <nav>
+  <button class="theme-btn" onclick="toggleTheme()">🌗 Mode</button>
+
   <div class="nav-center">
     <h1>ANASS LAHMAR</h1>
-    <span>Portfolio</span>
-    <span>TPs et Rapports</span>
+    <span>Portfolio TPs & Rapports</span>
   </div>
+
+  <div style="width:80px;"></div>
 </nav>
 
 <div class="container">
@@ -172,113 +202,95 @@ button:hover{
 
     <h3 id="title"></h3>
 
-    <!-- TP -->
-    <div>
-      <h4>🔵 TP</h4>
-      <input type="text" id="tpLink" placeholder="Lien TP">
-      <button onclick="openLink('tp')">Ouvrir TP</button>
-    </div>
+    <h4>🔵 TP</h4>
+    <input id="tpLink" placeholder="Lien TP">
+    <button onclick="openLink('tp')">Ouvrir TP</button>
 
-    <!-- RAPPORT -->
-    <div style="margin-top:15px;">
-      <h4>🟢 Rapport</h4>
-      <input type="text" id="rapportLink" placeholder="Lien Rapport">
-      <button onclick="openLink('rapport')">Ouvrir Rapport</button>
-    </div>
+    <h4>🟢 Rapport</h4>
+    <input id="rapportLink" placeholder="Lien Rapport">
+    <button onclick="openLink('rapport')">Ouvrir Rapport</button>
 
-    <br>
+    <br><br>
 
-    <button onclick="saveData()">💾 Sauvegarder</button>
-    <button onclick="deleteData()">🗑 Supprimer</button>
-    <button onclick="closeModal()">Fermer</button>
+    <button onclick="saveData()">Save</button>
+    <button onclick="deleteData()">Delete</button>
+    <button onclick="closeModal()">Close</button>
 
   </div>
 </div>
 
 <script>
-const data = {
-"Atelier 1":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-"Atelier 2":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-"Atelier 3":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-"Atelier 4":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-"Atelier 5":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-"Atelier 6":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-"Atelier 7":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-"Atelier 8":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-"Atelier 9":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-"Atelier 10":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-"Atelier 11":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"],
-"Atelier 12":["Exercice 1","Exercice 2","Exercice 3","Exercice 4","Exercice 5","Exercice 6","Exercice 7","Exercice 8"]
+const data={
+"Atelier 1":["Ex 1","Ex 2","Ex 3"],
+"Atelier 2":["Ex 1","Ex 2","Ex 3"],
+"Atelier 3":["Ex 1","Ex 2","Ex 3"],
+"Atelier 4":["Ex 1","Ex 2","Ex 3"],
+"Atelier 5":["Ex 1","Ex 2","Ex 3"],
+"Atelier 6":["Ex 1","Ex 2","Ex 3"],
+"Atelier 7":["Ex 1","Ex 2","Ex 3"],
+"Atelier 8":["Ex 1","Ex 2","Ex 3"],
+"Atelier 9":["Ex 1","Ex 2","Ex 3"],
+"Atelier 10":["Ex 1","Ex 2","Ex 3"],
+"Atelier 11":["Ex 1","Ex 2","Ex 3"],
+"Atelier 12":["Ex 1","Ex 2","Ex 3"]
 };
 
-let currentKey="";
+let current="";
 
-function openAtelier(name){
+function openAtelier(a){
 let box=document.getElementById("exercices");
-box.innerHTML="<h3>"+name+"</h3>";
+box.innerHTML="<h3>"+a+"</h3>";
 
-data[name].forEach(ex=>{
-let div=document.createElement("div");
-div.className="exercice";
-div.innerText=ex;
-div.onclick=()=>openExercise(name,ex);
-box.appendChild(div);
+data[a].forEach(e=>{
+let d=document.createElement("div");
+d.className="exercice";
+d.innerText=e;
+d.onclick=()=>openEx(a,e);
+box.appendChild(d);
 });
 
-observeElements();
+observe();
 }
 
-function openExercise(a,ex){
-currentKey=a+"_"+ex;
-document.getElementById("modal").style.display="block";
-document.getElementById("title").innerText=currentKey;
-
-document.getElementById("tpLink").value=localStorage.getItem(currentKey+"_tp")||"";
-document.getElementById("rapportLink").value=localStorage.getItem(currentKey+"_rapport")||"";
+function openEx(a,e){
+current=a+"_"+e;
+modal.style.display="block";
+title.innerText=current;
+tpLink.value=localStorage.getItem(current+"_tp")||"";
+rapportLink.value=localStorage.getItem(current+"_rapport")||"";
 }
 
 function saveData(){
-localStorage.setItem(currentKey+"_tp",document.getElementById("tpLink").value);
-localStorage.setItem(currentKey+"_rapport",document.getElementById("rapportLink").value);
-alert("Saved !");
+localStorage.setItem(current+"_tp",tpLink.value);
+localStorage.setItem(current+"_rapport",rapportLink.value);
 }
 
 function deleteData(){
-localStorage.removeItem(currentKey+"_tp");
-localStorage.removeItem(currentKey+"_rapport");
-document.getElementById("tpLink").value="";
-document.getElementById("rapportLink").value="";
+localStorage.removeItem(current+"_tp");
+localStorage.removeItem(current+"_rapport");
 }
 
-function openLink(type){
-let link=localStorage.getItem(currentKey+"_"+type);
-if(link) window.open(link,"_blank");
-else alert("No link");
+function openLink(t){
+let l=localStorage.getItem(current+"_"+t);
+if(l) window.open(l);
 }
 
-function closeModal(){
-document.getElementById("modal").style.display="none";
+function closeModal(){modal.style.display="none";}
+function outsideClick(e){if(e.target.id==="modal")closeModal();}
+
+function toggleTheme(){
+document.body.classList.toggle("light");
 }
 
-function outsideClick(e){
-if(e.target.id==="modal") closeModal();
-}
-
-const observer=new IntersectionObserver((entries)=>{
-entries.forEach(entry=>{
-if(entry.isIntersecting){
-entry.target.classList.add("show");
-}
+const obs=new IntersectionObserver(e=>{
+e.forEach(x=>x.isIntersecting&&x.target.classList.add("show"));
 });
-},{threshold:0.15});
 
-function observeElements(){
-document.querySelectorAll(".atelier, .exercice").forEach(el=>{
-observer.observe(el);
-});
+function observe(){
+document.querySelectorAll(".atelier,.exercice").forEach(x=>obs.observe(x));
 }
 
-window.addEventListener("load",observeElements);
+window.onload=observe;
 </script>
 
 </body>
