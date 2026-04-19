@@ -39,7 +39,6 @@ html {
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
   border-radius: 10px;
-  transition: all 0.3s;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -76,7 +75,6 @@ body {
   overflow-x: hidden;
 }
 
-/* WELCOME OVERLAY */
 #welcomeOverlay {
   position: fixed;
   top: 0;
@@ -140,7 +138,6 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* Navigation */
 nav {
   display: flex;
   justify-content: space-between;
@@ -206,7 +203,6 @@ nav.scrolled {
 .nav-links a:hover { color: var(--text); }
 .nav-links a:hover::after { width: 100%; }
 
-/* Hero Section */
 .hero {
   display: grid;
   align-items: center;
@@ -380,7 +376,6 @@ nav.scrolled {
 }
 .stat-item span:last-child { font-size: 11px; color: var(--muted); letter-spacing: 0.5px; }
 
-/* About Section */
 .about-section { padding: 80px 60px; position: relative; z-index: 2; }
 .about-container { max-width: 1000px; margin: 0 auto; }
 .about-title {
@@ -422,7 +417,6 @@ nav.scrolled {
   border-color: var(--accent);
 }
 
-/* Ateliers Section */
 .ateliers-section { padding: 80px 60px; position: relative; z-index: 2; }
 .section-title {
   font-family: 'Syne', sans-serif;
@@ -540,7 +534,6 @@ nav.scrolled {
 .link-rapport { color: #a78bfa; border-color: rgba(167, 139, 250, 0.3); background: rgba(167, 139, 250, 0.07); }
 .link-rapport:hover { background: rgba(167, 139, 250, 0.2); transform: translateY(-2px); border-color: #a78bfa; }
 
-/* Contact Modal avec étoile et hovers pro */
 #contactModal {
   display: none;
   position: fixed;
@@ -621,24 +614,6 @@ nav.scrolled {
 .cinfo-label { font-size: 11px; color: var(--muted); letter-spacing: 0.4px; display: block; margin-bottom: 2px; }
 .cinfo-value { font-size: 14px; font-weight: 600; letter-spacing: 0.5px; }
 
-/* Étoile pour le numéro de téléphone */
-.star-phone {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.star-phone::before {
-  content: '★';
-  color: var(--accent3);
-  font-size: 14px;
-  animation: starPulse 1.5s ease infinite;
-}
-@keyframes starPulse {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.2); text-shadow: 0 0 5px var(--accent3); }
-}
-
-/* Modal TP/Rapport */
 #modal {
   display: none;
   position: fixed;
@@ -794,7 +769,7 @@ input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0, 198, 25
 
   <div id="exercices"></div>
 
-  <!-- Contact Modal avec étoile sur le téléphone -->
+  <!-- CONTACT MODAL - NUMERO TELEPHONE LIGNE WEHDA BLA ETOILE -->
   <div id="contactModal" onclick="contactOverlayClick(event)">
     <div class="cmodal">
       <button class="cmodal-close" onclick="closeContactModal()">✕</button>
@@ -807,7 +782,7 @@ input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0, 198, 25
         </a>
         <a class="cinfo-tile" href="tel:0777852536">
           <div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.9v2.02z"/></svg></div>
-          <div><span class="cinfo-label">Téléphone</span><span class="cinfo-value star-phone">0777 852 536</span></div>
+          <div><span class="cinfo-label">Téléphone</span><span class="cinfo-value">0777 852 536</span></div>
         </a>
         <div class="cinfo-tile full" style="cursor:default;">
           <div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
@@ -820,21 +795,21 @@ input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0, 198, 25
   <div id="modal" onclick="outsideClick(event)">
     <div class="modal-content">
       <h3 id="modalTitle"></h3>
-      <div class="modal-section"><h4>Lien TP</h4><div class="input-row"><input type="text" id="tpLink" placeholder="https://..."><button class="btn-small" onclick="openModalLink('tp')">Ouvrir</button></div></div>
-      <div class="modal-section"><h4>Lien Rapport</h4><div class="input-row"><input type="text" id="rapportLink" placeholder="https://..."><button class="btn-small" onclick="openModalLink('rapport')">Ouvrir</button></div></div>
+      <div class="modal-section"><h4>Lien TP (Code source VS)</h4><div class="input-row"><input type="text" id="tpLink" placeholder="https://drive.google.com/..."><button class="btn-small" onclick="openModalLink('tp')">Ouvrir</button></div></div>
+      <div class="modal-section"><h4>Lien Rapport (Word)</h4><div class="input-row"><input type="text" id="rapportLink" placeholder="https://docs.google.com/..."><button class="btn-small" onclick="openModalLink('rapport')">Ouvrir</button></div></div>
       <div class="modal-actions"><button class="btn-save" onclick="saveData()">Sauvegarder</button><button class="btn-del" onclick="deleteData()">Supprimer</button><button class="btn-close" onclick="closeModal()">Fermer</button></div>
     </div>
   </div>
 </div>
 
 <script>
-// ==================== WELCOME OVERLAY - DISPARAÎT AU SCROLL ====================
+// WELCOME
 let welcomeRevealed = false;
 const welcomeOverlay = document.getElementById('welcomeOverlay');
 function hideWelcome() { if (!welcomeRevealed) { welcomeRevealed = true; welcomeOverlay.classList.add('hide'); } }
 window.addEventListener('scroll', function onFirstScroll() { if (!welcomeRevealed) { hideWelcome(); window.removeEventListener('scroll', onFirstScroll); } }, { passive: true, once: true });
 
-// ==================== ANIMATION 3D - DESIGN SOMBRE LUXUEUX ====================
+// ANIMATION CANVAS
 (function() {
   const canvas = document.getElementById('bgCanvas');
   const ctx = canvas.getContext('2d');
@@ -850,7 +825,6 @@ window.addEventListener('scroll', function onFirstScroll() { if (!welcomeReveale
   document.addEventListener('mouseleave', () => { mouse.active = false; });
   window.addEventListener('scroll', () => { targetScrollY = window.scrollY; });
   
-  // Anneaux lumineux
   const rings = [
     { r: 60, w: 3.5, a: 0.55, speed: 0.006, color: '#c084fc' },
     { r: 110, w: 2.5, a: 0.4, speed: -0.0045, color: '#a855f7' },
@@ -860,7 +834,6 @@ window.addEventListener('scroll', function onFirstScroll() { if (!welcomeReveale
   ];
   const ringAngles = rings.map(() => Math.random() * Math.PI * 2);
   
-  // Particules
   const particles = [];
   for (let i = 0; i < 120; i++) {
     particles.push({
@@ -874,7 +847,6 @@ window.addEventListener('scroll', function onFirstScroll() { if (!welcomeReveale
     });
   }
   
-  // Étoiles
   const stars = [];
   for (let i = 0; i < 250; i++) {
     stars.push({
@@ -966,7 +938,6 @@ window.addEventListener('scroll', function onFirstScroll() { if (!welcomeReveale
   draw();
 })();
 
-// Interactions souris sur cartes
 document.addEventListener('mousemove', e => {
   document.querySelectorAll('.atelier').forEach(el => {
     const rect = el.getBoundingClientRect();
@@ -975,7 +946,6 @@ document.addEventListener('mousemove', e => {
   });
 });
 
-// Scroll Progress & Nav
 const prog = document.getElementById('scrollProgress');
 const navEl = document.getElementById('mainNav');
 const scrollTopBtn = document.getElementById('scrollTop');
@@ -986,7 +956,7 @@ window.addEventListener('scroll', () => {
   scrollTopBtn.classList.toggle('visible', window.scrollY > 300);
 });
 
-// Greeting Animation
+// GREETING
 const GREETING = 'Bonjour, je suis';
 const gwEl = document.getElementById('greetingWrap');
 const allChars = [];
@@ -998,34 +968,214 @@ GREETING.split(' ').forEach(word => {
 allChars.forEach((c, i) => { setTimeout(() => { c.classList.add('visible'); c.style.transform = 'translateY(-6px)'; setTimeout(() => c.style.transform = '', 150); }, 400 + i * 55); });
 gwEl.addEventListener('mouseover', e => { if (e.target.classList.contains('g-char')) { const idx = allChars.indexOf(e.target); allChars.forEach((c, i) => { const d = Math.abs(i - idx); if (d <= 2) setTimeout(() => { c.style.transform = `translateY(${-6 + d*2}px) scale(${1.1 - d*0.03})`; setTimeout(() => c.style.transform = '', 300); }, d * 40); }); } });
 
-// Counters
+// COUNTERS
 function animateCounter(el) { const target = +el.dataset.target; let current = 0; const inc = target / 80; const timer = setInterval(() => { current += inc; if (current >= target) { current = target; clearInterval(timer); } el.textContent = Math.floor(current) + (target === 160 ? '+' : ''); }, 16); }
 const counterObs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { animateCounter(e.target); counterObs.unobserve(e.target); } }); }, { threshold: 0.5 });
 document.querySelectorAll('.counter').forEach(c => counterObs.observe(c));
 
-// Reveal animations
+// REVEAL
 const revealObs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in-view'); revealObs.unobserve(e.target); } }); }, { threshold: 0.15 });
 document.querySelectorAll('.reveal, .about-title, .about-left, .about-right, .section-title').forEach(el => revealObs.observe(el));
 
-// Contact modal
+// CONTACT MODAL
 function openContactModal() { document.getElementById('contactModal').classList.add('open'); }
 function closeContactModal() { document.getElementById('contactModal').classList.remove('open'); }
 function contactOverlayClick(e) { if (e.target.id === 'contactModal') closeContactModal(); }
 
-// Ateliers et exercices
+// ==================== ⭐⭐⭐ TABLEAU CENTRALISÉ DES LIENS ⭐⭐⭐ ====================
+// ICI TU METS TES LIENS POUR CHAQUE ATELIER ET EXERCICE
+// TP = lien Google Drive (code source Visual Studio)
+// RAPPORT = lien Google Docs / Word (screenshots)
+const MES_LIENS = {
+  // ----- ATELIER 1 -----
+  "Atelier 1_Exercice 1": {
+    tp: "https://drive.google.com/drive/folders/1EXEMPLE_TP1_EX1",
+    rapport: "https://docs.google.com/document/d/1EXEMPLE_RAPPORT1_EX1"
+  },
+  "Atelier 1_Exercice 2": {
+    tp: "https://drive.google.com/drive/folders/1EXEMPLE_TP1_EX2",
+    rapport: "https://docs.google.com/document/d/1EXEMPLE_RAPPORT1_EX2"
+  },
+  "Atelier 1_Exercice 3": {
+    tp: "https://drive.google.com/drive/folders/1EXEMPLE_TP1_EX3",
+    rapport: "https://docs.google.com/document/d/1EXEMPLE_RAPPORT1_EX3"
+  },
+  "Atelier 1_Exercice 4": {
+    tp: "https://drive.google.com/drive/folders/1EXEMPLE_TP1_EX4",
+    rapport: "https://docs.google.com/document/d/1EXEMPLE_RAPPORT1_EX4"
+  },
+  "Atelier 1_Exercice 5": {
+    tp: "https://drive.google.com/drive/folders/1EXEMPLE_TP1_EX5",
+    rapport: "https://docs.google.com/document/d/1EXEMPLE_RAPPORT1_EX5"
+  },
+  "Atelier 1_Exercice 6": {
+    tp: "https://drive.google.com/drive/folders/1EXEMPLE_TP1_EX6",
+    rapport: "https://docs.google.com/document/d/1EXEMPLE_RAPPORT1_EX6"
+  },
+  "Atelier 1_Exercice 7": {
+    tp: "https://drive.google.com/drive/folders/1EXEMPLE_TP1_EX7",
+    rapport: "https://docs.google.com/document/d/1EXEMPLE_RAPPORT1_EX7"
+  },
+  "Atelier 1_Exercice 8": {
+    tp: "https://drive.google.com/drive/folders/1EXEMPLE_TP1_EX8",
+    rapport: "https://docs.google.com/document/d/1EXEMPLE_RAPPORT1_EX8"
+  },
+
+  // ----- ATELIER 2 -----
+  "Atelier 2_Exercice 1": {
+    tp: "https://drive.google.com/drive/folders/1EXEMPLE_TP2_EX1",
+    rapport: "https://docs.google.com/document/d/1EXEMPLE_RAPPORT2_EX1"
+  },
+  "Atelier 2_Exercice 2": {
+    tp: "https://drive.google.com/drive/folders/1EXEMPLE_TP2_EX2",
+    rapport: "https://docs.google.com/document/d/1EXEMPLE_RAPPORT2_EX2"
+  },
+  "Atelier 2_Exercice 3": {
+    tp: "https://drive.google.com/drive/folders/1EXEMPLE_TP2_EX3",
+    rapport: "https://docs.google.com/document/d/1EXEMPLE_RAPPORT2_EX3"
+  },
+  "Atelier 2_Exercice 4": {
+    tp: "https://drive.google.com/drive/folders/1EXEMPLE_TP2_EX4",
+    rapport: "https://docs.google.com/document/d/1EXEMPLE_RAPPORT2_EX4"
+  },
+  "Atelier 2_Exercice 5": {
+    tp: "https://drive.google.com/drive/folders/1EXEMPLE_TP2_EX5",
+    rapport: "https://docs.google.com/document/d/1EXEMPLE_RAPPORT2_EX5"
+  },
+  "Atelier 2_Exercice 6": {
+    tp: "https://drive.google.com/drive/folders/1EXEMPLE_TP2_EX6",
+    rapport: "https://docs.google.com/document/d/1EXEMPLE_RAPPORT2_EX6"
+  },
+  "Atelier 2_Exercice 7": {
+    tp: "https://drive.google.com/drive/folders/1EXEMPLE_TP2_EX7",
+    rapport: "https://docs.google.com/document/d/1EXEMPLE_RAPPORT2_EX7"
+  },
+  "Atelier 2_Exercice 8": {
+    tp: "https://drive.google.com/drive/folders/1EXEMPLE_TP2_EX8",
+    rapport: "https://docs.google.com/document/d/1EXEMPLE_RAPPORT2_EX8"
+  },
+
+  // Ajoute ici Atelier 3 jusqu'à Atelier 20...
+  // Tu peux copier/coller le même modèle et changer les numéros
+};
+
+// ==================== FONCTION POUR RÉCUPÉRER LES LIENS ====================
+function getDefaultLinks(atelier, exercice) {
+  const key = atelier + "_" + exercice;
+  return MES_LIENS[key] || { tp: "", rapport: "" };
+}
+
+// ATELIERS & EXERCICES
 const ATELIERS = 20, EXERCICES_PAR_ATELIER = 8;
 let currentKey = '';
 const extIcon = `<svg viewBox="0 0 12 12" fill="none" width="10" height="10"><path d="M7 1h4v4M11 1L5.5 6.5M5 2H2a1 1 0 00-1 1v7a1 1 0 001 1h7a1 1 0 001-1V8" stroke="currentColor" stroke-width="1.4"/></svg>`;
 const gridContainer = document.getElementById('atelierGrid');
-for (let i = 1; i <= ATELIERS; i++) { const name = 'Atelier ' + i; const d = document.createElement('div'); d.className = 'atelier'; d.textContent = name; d.onclick = e => { const rect = d.getBoundingClientRect(); const rip = document.createElement('span'); rip.className = 'ripple'; const size = Math.max(d.offsetWidth, d.offsetHeight) * 2; rip.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - rect.left - size/2}px;top:${e.clientY - rect.top - size/2}px;`; d.appendChild(rip); setTimeout(() => rip.remove(), 700); openAtelier(name); }; gridContainer.appendChild(d); }
-function openAtelier(name) { const box = document.getElementById('exercices'); box.innerHTML = '<h3>' + name + '</h3>'; for (let j = 1; j <= EXERCICES_PAR_ATELIER; j++) { const exName = 'Exercice ' + j; const key = name + '_' + exName; const tpLink = localStorage.getItem(key + '_tp') || ''; const rapportLink = localStorage.getItem(key + '_rapport') || ''; const card = document.createElement('div'); card.className = 'exercice-card'; card.dataset.key = key; card.innerHTML = `<div class="exercice-label">${exName}</div><div class="exercice-links"><a class="link-btn link-tp" ${tpLink ? 'href="' + tpLink + '" target="_blank"' : 'href="#"'} onclick="handleLinkClick(event,'${key}','tp')">${extIcon} TP</a><a class="link-btn link-rapport" ${rapportLink ? 'href="' + rapportLink + '" target="_blank"' : 'href="#"'} onclick="handleLinkClick(event,'${key}','rapport')">${extIcon} Rapport</a></div>`; box.appendChild(card); setTimeout(() => card.classList.add('show'), j * 50); } box.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-function handleLinkClick(e, key, type) { const link = localStorage.getItem(key + '_' + type); if (!link) { e.preventDefault(); openModal(key); } }
-function openModal(key) { currentKey = key; const parts = key.split('_'); document.getElementById('modalTitle').textContent = parts[0] + ' ' + parts[1]; document.getElementById('modal').style.display = 'block'; document.getElementById('tpLink').value = localStorage.getItem(key + '_tp') || ''; document.getElementById('rapportLink').value = localStorage.getItem(key + '_rapport') || ''; }
-function saveData() { const tp = document.getElementById('tpLink').value.trim(); const rapport = document.getElementById('rapportLink').value.trim(); if (tp) localStorage.setItem(currentKey + '_tp', tp); else localStorage.removeItem(currentKey + '_tp'); if (rapport) localStorage.setItem(currentKey + '_rapport', rapport); else localStorage.removeItem(currentKey + '_rapport'); const card = document.querySelector('[data-key="' + currentKey + '"]'); if (card) { const links = card.querySelectorAll('.link-btn'); if (tp) { links[0].href = tp; links[0].target = '_blank'; links[0].onclick = null; } else { links[0].href = '#'; links[0].onclick = e => handleLinkClick(e, currentKey, 'tp'); } if (rapport) { links[1].href = rapport; links[1].target = '_blank'; links[1].onclick = null; } else { links[1].href = '#'; links[1].onclick = e => handleLinkClick(e, currentKey, 'rapport'); } } closeModal(); }
-function deleteData() { localStorage.removeItem(currentKey + '_tp'); localStorage.removeItem(currentKey + '_rapport'); document.getElementById('tpLink').value = ''; document.getElementById('rapportLink').value = ''; }
-function openModalLink(type) { const link = localStorage.getItem(currentKey + '_' + type); if (link) window.open(link, '_blank'); }
+
+for (let i = 1; i <= ATELIERS; i++) { 
+  const name = 'Atelier ' + i; 
+  const d = document.createElement('div'); 
+  d.className = 'atelier'; 
+  d.textContent = name; 
+  d.onclick = e => { 
+    const rect = d.getBoundingClientRect(); 
+    const rip = document.createElement('span'); 
+    rip.className = 'ripple'; 
+    const size = Math.max(d.offsetWidth, d.offsetHeight) * 2; 
+    rip.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - rect.left - size/2}px;top:${e.clientY - rect.top - size/2}px;`; 
+    d.appendChild(rip); 
+    setTimeout(() => rip.remove(), 700); 
+    openAtelier(name); 
+  }; 
+  gridContainer.appendChild(d); 
+}
+
+function openAtelier(name) { 
+  const box = document.getElementById('exercices'); 
+  box.innerHTML = '<h3>' + name + '</h3>'; 
+  for (let j = 1; j <= EXERCICES_PAR_ATELIER; j++) { 
+    const exName = 'Exercice ' + j; 
+    const key = name + '_' + exName; 
+    
+    const defaultLinks = getDefaultLinks(name, exName);
+    const tpLink = localStorage.getItem(key + '_tp') || defaultLinks.tp;
+    const rapportLink = localStorage.getItem(key + '_rapport') || defaultLinks.rapport;
+    
+    const card = document.createElement('div'); 
+    card.className = 'exercice-card'; 
+    card.dataset.key = key; 
+    card.innerHTML = `<div class="exercice-label">${exName}</div><div class="exercice-links">
+      <a class="link-btn link-tp" ${tpLink ? 'href="' + tpLink + '" target="_blank"' : 'href="#"'} onclick="handleLinkClick(event,'${key}','tp')">${extIcon} TP (Code VS)</a>
+      <a class="link-btn link-rapport" ${rapportLink ? 'href="' + rapportLink + '" target="_blank"' : 'href="#"'} onclick="handleLinkClick(event,'${key}','rapport')">${extIcon} Rapport (Word)</a>
+    </div>`; 
+    box.appendChild(card); 
+    setTimeout(() => card.classList.add('show'), j * 50); 
+  } 
+  box.scrollIntoView({ behavior: 'smooth', block: 'start' }); 
+}
+
+function handleLinkClick(e, key, type) { 
+  const link = localStorage.getItem(key + '_' + type); 
+  if (!link) { 
+    e.preventDefault(); 
+    openModal(key); 
+  } 
+}
+
+function openModal(key) { 
+  currentKey = key; 
+  const parts = key.split('_'); 
+  document.getElementById('modalTitle').textContent = parts[0] + ' ' + parts[1]; 
+  document.getElementById('modal').style.display = 'block'; 
+  document.getElementById('tpLink').value = localStorage.getItem(key + '_tp') || ''; 
+  document.getElementById('rapportLink').value = localStorage.getItem(key + '_rapport') || ''; 
+}
+
+function saveData() { 
+  const tp = document.getElementById('tpLink').value.trim(); 
+  const rapport = document.getElementById('rapportLink').value.trim(); 
+  if (tp) localStorage.setItem(currentKey + '_tp', tp); 
+  else localStorage.removeItem(currentKey + '_tp'); 
+  if (rapport) localStorage.setItem(currentKey + '_rapport', rapport); 
+  else localStorage.removeItem(currentKey + '_rapport'); 
+  
+  const card = document.querySelector('[data-key="' + currentKey + '"]'); 
+  if (card) { 
+    const links = card.querySelectorAll('.link-btn'); 
+    if (tp) { links[0].href = tp; links[0].target = '_blank'; links[0].onclick = null; } 
+    else { 
+      const parts = currentKey.split('_');
+      const defaultLinks = getDefaultLinks(parts[0], parts[1]);
+      links[0].href = defaultLinks.tp || '#'; 
+      links[0].onclick = e => handleLinkClick(e, currentKey, 'tp'); 
+    } 
+    if (rapport) { links[1].href = rapport; links[1].target = '_blank'; links[1].onclick = null; } 
+    else { 
+      const parts = currentKey.split('_');
+      const defaultLinks = getDefaultLinks(parts[0], parts[1]);
+      links[1].href = defaultLinks.rapport || '#'; 
+      links[1].onclick = e => handleLinkClick(e, currentKey, 'rapport'); 
+    } 
+  } 
+  closeModal(); 
+}
+
+function deleteData() { 
+  localStorage.removeItem(currentKey + '_tp'); 
+  localStorage.removeItem(currentKey + '_rapport'); 
+  document.getElementById('tpLink').value = ''; 
+  document.getElementById('rapportLink').value = ''; 
+  const parts = currentKey.split('_');
+  openAtelier(parts[0]);
+}
+
+function openModalLink(type) { 
+  const link = localStorage.getItem(currentKey + '_' + type); 
+  if (link) window.open(link, '_blank'); 
+}
+
 function closeModal() { document.getElementById('modal').style.display = 'none'; }
 function outsideClick(e) { if (e.target.id === 'modal') closeModal(); }
+
 const atelierObserver = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('show'); atelierObserver.unobserve(e.target); } }); }, { threshold: 0.05 });
 document.querySelectorAll('.atelier').forEach(el => atelierObserver.observe(el));
 </script>
