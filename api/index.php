@@ -16,7 +16,6 @@
   --muted:rgba(255,255,255,0.6);
 }
 
-/* ── SCROLL PROGRESS ── */
 #scrollProgress{
   position:fixed;top:0;left:0;height:2px;width:0%;
   background:linear-gradient(90deg,var(--accent),var(--accent2));
@@ -25,7 +24,6 @@
   transition:width 0.05s linear;
 }
 
-/* ── 3D CANVAS ── */
 #bgCanvas{
   position:fixed;top:0;left:0;
   width:100%;height:100%;
@@ -41,7 +39,6 @@ body{
   cursor:auto;
 }
 
-/* ── NAV ── */
 nav{
   display:flex;
   justify-content:space-between;
@@ -95,7 +92,6 @@ nav.scrolled{
 .nav-links a:hover{color:var(--text);}
 .nav-links a:hover::after{width:100%;}
 
-/* ── HERO ── */
 .hero{
   display:grid;
   grid-template-columns:1fr;
@@ -122,7 +118,6 @@ nav.scrolled{
   background:var(--accent);animation:pulse 2s infinite;
 }
 
-/* HERO H1 */
 .hero-name{
   font-family:'Syne',sans-serif;
   font-size:clamp(34px,4vw,54px);
@@ -130,7 +125,6 @@ nav.scrolled{
   letter-spacing:-1px;margin-bottom:16px;
 }
 
-/* Typewriter greeting */
 .greeting-wrap{
   display:inline-flex;flex-wrap:wrap;
   gap:0 0.28em;
@@ -153,7 +147,6 @@ nav.scrolled{
   transform:translateY(-8px) scale(1.1);
 }
 
-/* "Anass." */
 .name-main{
   display:inline-block;position:relative;
   padding-bottom:6px;
@@ -233,7 +226,6 @@ nav.scrolled{
   background:rgba(255,255,255,0.05);
 }
 
-/* ── STATS ── */
 .hero-stats{
   display:flex;gap:32px;margin-top:36px;
   padding-top:28px;
@@ -249,7 +241,6 @@ nav.scrolled{
 }
 .stat-item span:last-child{font-size:11px;color:var(--muted);letter-spacing:0.5px;}
 
-/* ── ATELIERS ── */
 .ateliers-section{
   padding:80px 60px;
   position:relative;z-index:1;
@@ -269,7 +260,6 @@ nav.scrolled{
   gap:16px;
 }
 
-/* ── ATELIER CARD — Professional hover ── */
 .atelier{
   background:rgba(255,255,255,0.04);
   padding:24px 20px;border-radius:16px;
@@ -285,7 +275,6 @@ nav.scrolled{
   position:relative;overflow:hidden;
 }
 
-/* Shimmer overlay */
 .atelier::after{
   content:'';
   position:absolute;inset:0;
@@ -318,7 +307,6 @@ nav.scrolled{
 .atelier.show{opacity:1;transform:translateY(0);}
 .atelier.show:hover{transform:translateY(-6px) scale(1.02);}
 
-/* Ripple on atelier click */
 .ripple{
   position:absolute;border-radius:50%;
   background:rgba(0,198,255,0.25);
@@ -329,7 +317,6 @@ nav.scrolled{
   to{transform:scale(4);opacity:0;}
 }
 
-/* ── EXERCICES ── */
 #exercices{
   padding:0 60px 60px;
   position:relative;z-index:1;
@@ -375,7 +362,6 @@ nav.scrolled{
 .link-rapport:hover{background:rgba(167,139,250,0.2);border-color:rgba(167,139,250,0.6);}
 .link-btn svg{width:11px;height:11px;flex-shrink:0;}
 
-/* ── CONTACT MODAL ── */
 #contactModal{
   display:none;position:fixed;inset:0;
   background:rgba(0,0,0,0.72);backdrop-filter:blur(12px);
@@ -432,7 +418,6 @@ nav.scrolled{
 .cinfo-label{font-size:11px;color:var(--muted);letter-spacing:0.4px;display:block;margin-bottom:2px;}
 .cinfo-value{font-size:13px;font-weight:500;}
 
-/* ── MODAL EDIT ── */
 #modal{
   display:none;position:fixed;top:0;left:0;
   width:100%;height:100%;
@@ -499,11 +484,9 @@ input::placeholder{color:rgba(255,255,255,0.3);}
   font-family:'Inter',sans-serif;
 }
 
-/* ── KEYFRAMES ── */
 @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
 
-/* ── SCROLL TO TOP ── */
 #scrollTop{
   position:fixed;bottom:32px;right:32px;
   width:40px;height:40px;border-radius:50%;
@@ -534,13 +517,8 @@ input::placeholder{color:rgba(255,255,255,0.3);}
 </head>
 <body>
 
-<!-- Scroll progress bar -->
 <div id="scrollProgress"></div>
-
-<!-- 3D Canvas -->
 <canvas id="bgCanvas"></canvas>
-
-<!-- Scroll to top -->
 <button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <nav id="mainNav">
@@ -637,235 +615,166 @@ input::placeholder{color:rgba(255,255,255,0.3);}
 
 <script>
 /* ══════════════════════════════════
-   3D BACKGROUND — Perspective grid + floating shapes + scroll parallax
+   3D PARTICLE FIELD — cursor magnetic + scroll parallax + depth web
 ══════════════════════════════════ */
 (function(){
   const canvas = document.getElementById('bgCanvas');
-  const ctx    = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d');
 
-  let W, H, scrollY = 0, targetScrollY = 0, time = 0;
+  let W, H, mouse = {x:-9999,y:-9999}, scrollY = 0, targetScrollY = 0;
 
   function resize(){
-    W = canvas.width  = window.innerWidth;
+    W = canvas.width = window.innerWidth;
     H = canvas.height = window.innerHeight;
   }
   resize();
   window.addEventListener('resize', resize);
 
+  // Real-time cursor tracking
+  window.addEventListener('mousemove', e => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+  window.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
   // Smooth scroll tracking
   window.addEventListener('scroll', () => { targetScrollY = window.scrollY; });
 
-  /* ── PERSPECTIVE GRID ── */
-  // Grid lives on a plane that recedes into the horizon
-  // Horizon sits at ~55% of screen height
-  // Scroll shifts the camera forward/backward along Z
+  /* ── PARTICLES 3D ── */
+  const COUNT = 130;
+  const particles = [];
 
-  const GRID_COLS  = 14;   // vertical lines
-  const GRID_ROWS  = 18;   // horizontal lines
-  const GRID_W     = 2.4;  // world units wide (half = 1.2 each side)
-  const GRID_D     = 3.0;  // world units deep
-  const FOV        = 0.85; // ~50°
+  class Particle {
+    constructor() { this.reset(true); }
+    reset(init) {
+      this.ox    = Math.random() * W;
+      this.oy    = init ? Math.random() * H : -20;
+      this.z     = Math.random();                         // 0=far, 1=near
+      this.vx    = (Math.random() - 0.5) * 0.35 * (0.3 + this.z * 0.7);
+      this.vy    = (Math.random() - 0.5) * 0.25 * (0.3 + this.z * 0.7);
+      this.mx    = 0;                                     // magnetic offset X
+      this.my    = 0;                                     // magnetic offset Y
+      this.r     = 1 + this.z * 2.2;                     // radius by depth
+      this.alpha = 0.15 + this.z * 0.55;
+      this.depth = 0.08 + this.z * 0.55;                 // parallax speed
+    }
+    get x(){ return this.ox + this.mx; }
+    get screenY(){ return this.oy + this.my - scrollY * this.depth; }
 
-  function projectGrid(wx, wz) {
-    // wx: -1..1, wz: 0..1 (0=near, 1=far)
-    const horizon = H * 0.54;
-    const camH    = 0.28;            // camera height above plane
-    const fwd     = wz;              // distance forward
-    if(fwd <= 0.001) return null;
-    const scale   = FOV / fwd;
-    const sx      = W / 2 + wx * scale * W * 0.52;
-    const sy      = horizon + (camH / fwd) * H * FOV * -1 + H * FOV * camH;
-    // simpler: project from horizon
-    const t       = 1 - fwd;        // 0=far, 1=near
-    const sy2     = horizon + t * (H - horizon) * 0.95;
-    const sx2     = W / 2 + wx * t * W * 0.52;
-    return { x: sx2, y: sy2 };
+    update() {
+      // Drift
+      this.ox += this.vx;
+      this.oy += this.vy;
+
+      // Wrap boundaries
+      if (this.ox < -20) this.ox = W + 20;
+      if (this.ox > W + 20) this.ox = -20;
+      if (this.oy < -20) this.oy = H + 20;
+      if (this.oy > H + 20) this.oy = -20;
+
+      // Magnetic cursor attraction
+      const sx = this.ox + this.mx;
+      const sy = this.oy + this.my - scrollY * this.depth;
+      const dx = mouse.x - sx;
+      const dy = mouse.y - sy;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const RADIUS = 80 + this.z * 60;   // near particles react from farther
+
+      if (dist < RADIUS && dist > 0) {
+        const force = (1 - dist / RADIUS) * (0.4 + this.z * 0.6);
+        this.mx += dx * force * 0.09;
+        this.my += dy * force * 0.09;
+      }
+
+      // Spring restore
+      this.mx *= 0.87;
+      this.my *= 0.87;
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.screenY, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(0,198,255,${this.alpha})`;
+      ctx.fill();
+    }
   }
 
-  /* ── FLOATING WIREFRAME SHAPES ── */
-  function makeCube(s){ const h=s/2; return {
-    verts:[[-h,-h,-h],[h,-h,-h],[h,h,-h],[-h,h,-h],[-h,-h,h],[h,-h,h],[h,h,h],[-h,h,h]],
-    edges:[[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]]
-  };}
-  function makeOcta(s){ return {
-    verts:[[0,s,0],[0,-s,0],[s,0,0],[-s,0,0],[0,0,s],[0,0,-s]],
-    edges:[[0,2],[0,3],[0,4],[0,5],[1,2],[1,3],[1,4],[1,5],[2,4],[4,3],[3,5],[5,2]]
-  };}
-  function makeTri(s){ const h=s*0.9,b=s*0.65; return {
-    verts:[[0,-h,0],[-b,h,-b],[b,h,-b],[b,h,b],[-b,h,b]],
-    edges:[[0,1],[0,2],[0,3],[0,4],[1,2],[2,3],[3,4],[4,1]]
-  };}
+  for (let i = 0; i < COUNT; i++) particles.push(new Particle());
 
-  const builders = [makeCube, makeOcta, makeTri];
-  const SHAPES = [];
-  for(let i=0;i<12;i++){
-    const fn   = builders[i % builders.length];
-    const size = 18 + Math.random()*36;
-    const geo  = fn(size);
-    SHAPES.push({
-      ...geo,
-      x : Math.random()*W,
-      y : Math.random()*H*2.5 - H*0.5,   // spread over full page height
-      baseY: 0,                            // set after first frame
-      z : Math.random()*260 - 130,
-      vx: (Math.random()-0.5)*0.28,
-      vy: (Math.random()-0.5)*0.22,
-      vz: (Math.random()-0.5)*0.18,
-      rx:  Math.random()*Math.PI*2,
-      ry:  Math.random()*Math.PI*2,
-      rz:  Math.random()*Math.PI*2,
-      drx: (Math.random()-0.5)*0.007,
-      dry: (Math.random()-0.5)*0.009,
-      drz: (Math.random()-0.5)*0.005,
-      depth: 0.4 + Math.random()*0.6,     // parallax depth (0=slow, 1=fast)
-      alpha: 0.10 + Math.random()*0.13
-    });
-  }
-
-  function rot(v, rx, ry, rz){
-    let [x,y,z] = v;
-    let y1=y*Math.cos(rx)-z*Math.sin(rx), z1=y*Math.sin(rx)+z*Math.cos(rx); y=y1;z=z1;
-    let x2=x*Math.cos(ry)+z*Math.sin(ry), z2=-x*Math.sin(ry)+z*Math.cos(ry); x=x2;z=z2;
-    let x3=x*Math.cos(rz)-y*Math.sin(rz), y3=x*Math.sin(rz)+y*Math.cos(rz);
-    return [x3,y3,z];
-  }
-
-  function proj(wx,wy,wz){
-    const fov=420, cx=W/2, cy=H/2;
-    const d = fov+wz;
-    if(d<1) return null;
-    return { x: wx*(fov/d)+cx, y: wy*(fov/d)+cy };
-  }
-
-  /* ── GLOW ORBS (static, parallax) ── */
+  /* ── GLOW ORBS (parallax layers) ── */
   const ORBS = [
-    { nx:0.18, ny:0.30, r:180, depth:0.15, c:'0,198,255',  a:0.045 },
-    { nx:0.78, ny:0.60, r:220, depth:0.25, c:'0,114,255',  a:0.040 },
-    { nx:0.50, ny:1.10, r:260, depth:0.40, c:'0,198,255',  a:0.030 },
-    { nx:0.08, ny:1.50, r:190, depth:0.35, c:'100,80,255', a:0.035 },
+    { nx:0.18, ny:0.30, r:180, depth:0.12, c:'0,198,255',  a:0.045 },
+    { nx:0.78, ny:0.60, r:220, depth:0.22, c:'0,114,255',  a:0.040 },
+    { nx:0.50, ny:1.10, r:260, depth:0.38, c:'0,198,255',  a:0.030 },
+    { nx:0.08, ny:1.50, r:190, depth:0.32, c:'100,80,255', a:0.032 },
   ];
 
-  /* ── MAIN DRAW ── */
-  function draw(){
-    time += 0.008;
-    scrollY += (targetScrollY - scrollY) * 0.06; // smooth lag
+  /* ── WEB CONNECTIONS ── */
+  function drawConnections() {
+    for (let i = 0; i < particles.length; i++) {
+      const a = particles[i];
+      for (let j = i + 1; j < particles.length; j++) {
+        const b = particles[j];
+        const dx = a.x - b.x;
+        const dy = a.screenY - b.screenY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const maxDist = 95 + (a.z + b.z) * 28;
+        if (dist < maxDist) {
+          const alpha = (1 - dist / maxDist) * Math.min(a.alpha, b.alpha) * 0.22;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.screenY);
+          ctx.lineTo(b.x, b.screenY);
+          ctx.strokeStyle = `rgba(0,198,255,${alpha})`;
+          ctx.lineWidth = 0.45 + (a.z + b.z) * 0.18;
+          ctx.stroke();
+        }
+      }
+    }
+  }
 
-    ctx.clearRect(0,0,W,H);
+  /* ── CURSOR AURA ── */
+  function drawCursorAura() {
+    if (mouse.x < 0) return;
+    const g = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 90);
+    g.addColorStop(0,   'rgba(0,198,255,0.07)');
+    g.addColorStop(0.5, 'rgba(0,114,255,0.03)');
+    g.addColorStop(1,   'rgba(0,198,255,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(mouse.x, mouse.y, 90, 0, Math.PI * 2);
+    ctx.fill();
+  }
 
-    /* — GLOW ORBS — */
-    for(const o of ORBS){
+  /* ── MAIN LOOP ── */
+  function draw() {
+    scrollY += (targetScrollY - scrollY) * 0.07;
+    ctx.clearRect(0, 0, W, H);
+
+    // Glow orbs
+    for (const o of ORBS) {
       const px = o.nx * W;
       const py = o.ny * H - scrollY * o.depth;
-      const g  = ctx.createRadialGradient(px,py,0, px,py,o.r);
+      const g  = ctx.createRadialGradient(px, py, 0, px, py, o.r);
       g.addColorStop(0,   `rgba(${o.c},${o.a})`);
-      g.addColorStop(0.5, `rgba(${o.c},${o.a*0.4})`);
+      g.addColorStop(0.5, `rgba(${o.c},${o.a * 0.4})`);
       g.addColorStop(1,   `rgba(${o.c},0)`);
       ctx.fillStyle = g;
       ctx.beginPath();
-      ctx.arc(px, py, o.r, 0, Math.PI*2);
+      ctx.arc(px, py, o.r, 0, Math.PI * 2);
       ctx.fill();
     }
 
-    /* — PERSPECTIVE GRID — */
-    const horizon   = H * 0.54;
-    const gridShift = (scrollY * 0.00045) % (1/GRID_ROWS); // infinite scroll illusion
+    // Cursor aura
+    drawCursorAura();
 
-    // Vertical lines (converge to horizon center)
-    for(let c=0; c<=GRID_COLS; c++){
-      const wx = (c/GRID_COLS)*2 - 1;   // -1..1
-      const pNear = projectGrid(wx, 1.0 - gridShift);
-      const pFar  = { x: W/2 + wx*0, y: horizon };
-      if(!pNear) continue;
+    // Update all particles first
+    for (const p of particles) p.update();
 
-      const distFromCenter = Math.abs(wx);
-      const alpha = (0.18 - distFromCenter*0.12) * Math.max(0, 1 - distFromCenter*0.5);
-      if(alpha <= 0) continue;
+    // Draw connections (behind particles)
+    drawConnections();
 
-      const grad = ctx.createLinearGradient(pFar.x, pFar.y, pNear.x, pNear.y);
-      grad.addColorStop(0,   `rgba(0,198,255,0)`);
-      grad.addColorStop(0.3, `rgba(0,198,255,${alpha*0.5})`);
-      grad.addColorStop(1,   `rgba(0,198,255,${alpha})`);
-
-      ctx.beginPath();
-      ctx.moveTo(pFar.x, pFar.y);
-      ctx.lineTo(pNear.x, pNear.y);
-      ctx.strokeStyle = grad;
-      ctx.lineWidth   = 0.7;
-      ctx.stroke();
-    }
-
-    // Horizontal lines (recede with perspective)
-    for(let r=1; r<=GRID_ROWS; r++){
-      const t    = r/GRID_ROWS;          // 0=far, 1=near
-      const wz   = 1 - t + gridShift;
-      const pL   = projectGrid(-1, wz);
-      const pR   = projectGrid( 1, wz);
-      if(!pL || !pR) continue;
-
-      const alpha = t * 0.20;
-      ctx.beginPath();
-      ctx.moveTo(pL.x, pL.y);
-      ctx.lineTo(pR.x, pR.y);
-      ctx.strokeStyle = `rgba(0,198,255,${alpha})`;
-      ctx.lineWidth   = 0.6;
-      ctx.stroke();
-    }
-
-    // Horizon glow line
-    const hGrad = ctx.createLinearGradient(0, horizon, W, horizon);
-    hGrad.addColorStop(0,   'rgba(0,198,255,0)');
-    hGrad.addColorStop(0.3, 'rgba(0,198,255,0.22)');
-    hGrad.addColorStop(0.5, 'rgba(0,198,255,0.38)');
-    hGrad.addColorStop(0.7, 'rgba(0,198,255,0.22)');
-    hGrad.addColorStop(1,   'rgba(0,198,255,0)');
-    ctx.beginPath();
-    ctx.moveTo(0, horizon);
-    ctx.lineTo(W, horizon);
-    ctx.strokeStyle = hGrad;
-    ctx.lineWidth   = 1.2;
-    ctx.stroke();
-
-    /* — FLOATING SHAPES with scroll parallax — */
-    for(const s of SHAPES){
-      s.rx += s.drx; s.ry += s.dry; s.rz += s.drz;
-      s.x  += s.vx;  s.z  += s.vz;
-
-      // Parallax: shapes at high depth move faster with scroll
-      const parallaxY = s.y - scrollY * s.depth;
-
-      if(s.x < -120) s.vx =  Math.abs(s.vx);
-      if(s.x > W+120) s.vx = -Math.abs(s.vx);
-      if(s.z < -200)  s.vz =  Math.abs(s.vz);
-      if(s.z >  200)  s.vz = -Math.abs(s.vz);
-
-      // Only draw if near viewport
-      if(parallaxY < -200 || parallaxY > H+200) continue;
-
-      const projected = s.verts.map(v => {
-        const [lx,ly,lz] = rot(v, s.rx, s.ry, s.rz);
-        return proj(s.x - W/2 + lx, parallaxY - H/2 + ly, s.z + lz + 400);
-      });
-
-      ctx.beginPath();
-      for(const [a,b] of s.edges){
-        const pa = projected[a], pb = projected[b];
-        if(!pa || !pb) continue;
-        ctx.moveTo(pa.x, pa.y);
-        ctx.lineTo(pb.x, pb.y);
-      }
-      ctx.strokeStyle = `rgba(0,198,255,${s.alpha})`;
-      ctx.lineWidth   = 0.9;
-      ctx.stroke();
-
-      // Vertex dots
-      for(const p of projected){
-        if(!p) continue;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 1.4, 0, Math.PI*2);
-        ctx.fillStyle = `rgba(0,198,255,${s.alpha * 1.6})`;
-        ctx.fill();
-      }
-    }
+    // Draw particles on top
+    for (const p of particles) p.draw();
 
     requestAnimationFrame(draw);
   }
