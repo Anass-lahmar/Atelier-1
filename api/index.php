@@ -396,7 +396,6 @@ nav.scrolled {
 .about-title.in-view { opacity: 1; transform: translateY(0); }
 .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
 
-/* CARDS STYLES - HOVER PROFESSIONNEL SANS CADRE BLANC */
 .about-left, .about-right {
   background: rgba(15, 25, 45, 0.35);
   backdrop-filter: blur(2px);
@@ -421,7 +420,6 @@ nav.scrolled {
 }
 .about-right.in-view { opacity: 1; transform: translateX(0); }
 
-/* HOVER PROFESSIONNEL : transition fluide, pas de fond blanc agressif */
 .about-left:hover, .about-right:hover {
   background: rgba(0, 130, 200, 0.08);
   border-color: rgba(0, 198, 255, 0.45);
@@ -429,7 +427,6 @@ nav.scrolled {
   box-shadow: 0 20px 35px -15px rgba(0, 198, 255, 0.25), 0 0 0 1px rgba(0, 198, 255, 0.1) inset;
 }
 
-/* Effet subtil pour le texte */
 .about-text {
   font-size: 15px;
   line-height: 1.75;
@@ -693,6 +690,8 @@ nav.scrolled {
   border: 1px solid rgba(0, 198, 255, 0.2);
 }
 .modal-content h3 { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 24px; color: var(--accent); }
+.modal-section { margin-bottom: 18px; }
+.modal-section h4 { font-size: 12px; color: var(--muted); letter-spacing: 0.5px; margin-bottom: 8px; text-transform: uppercase; }
 .input-row { display: flex; gap: 8px; }
 input {
   flex: 1;
@@ -706,14 +705,14 @@ input {
   transition: all 0.2s;
 }
 input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.1); }
-.btn-small { padding: 10px 14px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border: none; border-radius: 10px; color: #fff; cursor: pointer; transition: all 0.2s; }
+.btn-small { padding: 10px 14px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border: none; border-radius: 10px; color: #fff; cursor: pointer; transition: all 0.2s; font-size: 12px; white-space: nowrap; }
 .btn-small:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 114, 255, 0.4); }
 .modal-actions { display: flex; gap: 8px; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.07); }
-.btn-save { flex: 1; padding: 11px; background: linear-gradient(135deg, var(--accent3), var(--accent), var(--accent2)); border: none; border-radius: 10px; color: #fff; cursor: pointer; transition: all 0.2s; }
+.btn-save { flex: 1; padding: 11px; background: linear-gradient(135deg, var(--accent3), var(--accent), var(--accent2)); border: none; border-radius: 10px; color: #fff; cursor: pointer; transition: all 0.2s; font-size: 13px; }
 .btn-save:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 114, 255, 0.4); }
-.btn-del { padding: 11px 16px; background: rgba(255, 80, 80, 0.1); border: 1px solid rgba(255, 80, 80, 0.18); border-radius: 10px; color: #ff6060; cursor: pointer; transition: all 0.2s; }
+.btn-del { padding: 11px 16px; background: rgba(255, 80, 80, 0.1); border: 1px solid rgba(255, 80, 80, 0.18); border-radius: 10px; color: #ff6060; cursor: pointer; transition: all 0.2s; font-size: 13px; }
 .btn-del:hover { background: rgba(255, 80, 80, 0.2); transform: translateY(-2px); }
-.btn-close { padding: 11px 16px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; color: var(--muted); cursor: pointer; transition: all 0.2s; }
+.btn-close { padding: 11px 16px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; color: var(--muted); cursor: pointer; transition: all 0.2s; font-size: 13px; }
 .btn-close:hover { background: rgba(255, 255, 255, 0.1); transform: translateY(-2px); }
 
 #scrollTop {
@@ -830,17 +829,286 @@ input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0, 198, 25
 
   <div id="contactModal" onclick="contactOverlayClick(event)"><div class="cmodal"><button class="cmodal-close" onclick="closeContactModal()">✕</button><h3>Me <span>contacter</span></h3><p class="cmodal-subtitle">Disponible pour missions et collaborations.</p><div class="cinfo-grid"><a class="cinfo-tile" href="mailto:Anaslhm76@gmail.com"><div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg></div><div><span class="cinfo-label">Email</span><span class="cinfo-value">Anaslhm76@gmail.com</span></div></a><a class="cinfo-tile" href="tel:0777852536"><div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.9v2.02z"/></svg></div><div><span class="cinfo-label">Téléphone</span><span class="cinfo-value">0777 852 536</span></div></a><div class="cinfo-tile full" style="cursor:default;"><div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><span class="cinfo-label">Localisation</span><span class="cinfo-value">Tanger, Maroc</span></div></div></div></div></div>
 
-  <div id="modal" onclick="outsideClick(event)"><div class="modal-content"><h3 id="modalTitle"></h3><div class="modal-section"><h4>Lien TP (Code source VS)</h4><div class="input-row"><input type="text" id="tpLink" placeholder="https://drive.google.com/..."><button class="btn-small" onclick="openModalLink('tp')">Ouvrir</button></div></div><div class="modal-section"><h4>Lien Rapport (Word)</h4><div class="input-row"><input type="text" id="rapportLink" placeholder="https://docs.google.com/..."><button class="btn-small" onclick="openModalLink('rapport')">Ouvrir</button></div></div><div class="modal-actions"><button class="btn-save" onclick="saveData()">Sauvegarder</button><button class="btn-del" onclick="deleteData()">Supprimer</button><button class="btn-close" onclick="closeModal()">Fermer</button></div></div></div>
+  <div id="modal" onclick="outsideClick(event)">
+    <div class="modal-content">
+      <h3 id="modalTitle"></h3>
+      <div class="modal-section">
+        <h4>Lien TP (Code source VS)</h4>
+        <div class="input-row">
+          <input type="text" id="tpLink" placeholder="https://drive.google.com/...">
+          <button class="btn-small" onclick="openModalLink('tp')">Ouvrir</button>
+        </div>
+      </div>
+      <div class="modal-section">
+        <h4>Lien Rapport (Word)</h4>
+        <div class="input-row">
+          <input type="text" id="rapportLink" placeholder="https://docs.google.com/...">
+          <button class="btn-small" onclick="openModalLink('rapport')">Ouvrir</button>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-save" onclick="saveData()">Sauvegarder</button>
+        <button class="btn-del" onclick="deleteData()">Supprimer</button>
+        <button class="btn-close" onclick="closeModal()">Fermer</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-// Welcome & all logic remains same as before
+// ============================================================
+// MES LIENS - Collier les liens dyalek hna (tp o rapport)
+// ============================================================
+const MES_LIENS = {
+  "Atelier 1_Exercice 1":  { tp: "", rapport: "" },
+  "Atelier 1_Exercice 2":  { tp: "", rapport: "" },
+  "Atelier 1_Exercice 3":  { tp: "", rapport: "" },
+  "Atelier 1_Exercice 4":  { tp: "", rapport: "" },
+  "Atelier 1_Exercice 5":  { tp: "", rapport: "" },
+  "Atelier 1_Exercice 6":  { tp: "", rapport: "" },
+  "Atelier 1_Exercice 7":  { tp: "", rapport: "" },
+  "Atelier 1_Exercice 8":  { tp: "", rapport: "" },
+
+
+
+
+
+  "Atelier 2_Exercice 1":  { tp: "", rapport: "" },
+  "Atelier 2_Exercice 2":  { tp: "", rapport: "" },
+  "Atelier 2_Exercice 3":  { tp: "", rapport: "" },
+  "Atelier 2_Exercice 4":  { tp: "", rapport: "" },
+  "Atelier 2_Exercice 5":  { tp: "", rapport: "" },
+  "Atelier 2_Exercice 6":  { tp: "", rapport: "" },
+  "Atelier 2_Exercice 7":  { tp: "", rapport: "" },
+  "Atelier 2_Exercice 8":  { tp: "", rapport: "" },
+
+
+
+
+  "Atelier 3_Exercice 1":  { tp: "", rapport: "" },
+  "Atelier 3_Exercice 2":  { tp: "", rapport: "" },
+  "Atelier 3_Exercice 3":  { tp: "", rapport: "" },
+  "Atelier 3_Exercice 4":  { tp: "", rapport: "" },
+  "Atelier 3_Exercice 5":  { tp: "", rapport: "" },
+  "Atelier 3_Exercice 6":  { tp: "", rapport: "" },
+  "Atelier 3_Exercice 7":  { tp: "", rapport: "" },
+  "Atelier 3_Exercice 8":  { tp: "", rapport: "" },
+
+
+
+
+  "Atelier 4_Exercice 1":  { tp: "", rapport: "" },
+  "Atelier 4_Exercice 2":  { tp: "", rapport: "" },
+  "Atelier 4_Exercice 3":  { tp: "", rapport: "" },
+  "Atelier 4_Exercice 4":  { tp: "", rapport: "" },
+  "Atelier 4_Exercice 5":  { tp: "", rapport: "" },
+  "Atelier 4_Exercice 6":  { tp: "", rapport: "" },
+  "Atelier 4_Exercice 7":  { tp: "", rapport: "" },
+  "Atelier 4_Exercice 8":  { tp: "", rapport: "" },
+
+
+
+
+  "Atelier 5_Exercice 1":  { tp: "", rapport: "" },
+  "Atelier 5_Exercice 2":  { tp: "", rapport: "" },
+  "Atelier 5_Exercice 3":  { tp: "", rapport: "" },
+  "Atelier 5_Exercice 4":  { tp: "", rapport: "" },
+  "Atelier 5_Exercice 5":  { tp: "", rapport: "" },
+  "Atelier 5_Exercice 6":  { tp: "", rapport: "" },
+  "Atelier 5_Exercice 7":  { tp: "", rapport: "" },
+  "Atelier 5_Exercice 8":  { tp: "", rapport: "" },
+
+
+
+
+  "Atelier 6_Exercice 1":  { tp: "", rapport: "" },
+  "Atelier 6_Exercice 2":  { tp: "", rapport: "" },
+  "Atelier 6_Exercice 3":  { tp: "", rapport: "" },
+  "Atelier 6_Exercice 4":  { tp: "", rapport: "" },
+  "Atelier 6_Exercice 5":  { tp: "", rapport: "" },
+  "Atelier 6_Exercice 6":  { tp: "", rapport: "" },
+  "Atelier 6_Exercice 7":  { tp: "", rapport: "" },
+  "Atelier 6_Exercice 8":  { tp: "", rapport: "" },
+
+
+
+
+  "Atelier 7_Exercice 1":  { tp: "", rapport: "" },
+  "Atelier 7_Exercice 2":  { tp: "", rapport: "" },
+  "Atelier 7_Exercice 3":  { tp: "", rapport: "" },
+  "Atelier 7_Exercice 4":  { tp: "", rapport: "" },
+  "Atelier 7_Exercice 5":  { tp: "", rapport: "" },
+  "Atelier 7_Exercice 6":  { tp: "", rapport: "" },
+  "Atelier 7_Exercice 7":  { tp: "", rapport: "" },
+  "Atelier 7_Exercice 8":  { tp: "", rapport: "" },
+
+
+
+
+
+  "Atelier 8_Exercice 1":  { tp: "", rapport: "" },
+  "Atelier 8_Exercice 2":  { tp: "", rapport: "" },
+  "Atelier 8_Exercice 3":  { tp: "", rapport: "" },
+  "Atelier 8_Exercice 4":  { tp: "", rapport: "" },
+  "Atelier 8_Exercice 5":  { tp: "", rapport: "" },
+  "Atelier 8_Exercice 6":  { tp: "", rapport: "" },
+  "Atelier 8_Exercice 7":  { tp: "", rapport: "" },
+  "Atelier 8_Exercice 8":  { tp: "", rapport: "" },
+
+
+
+
+  "Atelier 9_Exercice 1":  { tp: "", rapport: "" },
+  "Atelier 9_Exercice 2":  { tp: "", rapport: "" },
+  "Atelier 9_Exercice 3":  { tp: "", rapport: "" },
+  "Atelier 9_Exercice 4":  { tp: "", rapport: "" },
+  "Atelier 9_Exercice 5":  { tp: "", rapport: "" },
+  "Atelier 9_Exercice 6":  { tp: "", rapport: "" },
+  "Atelier 9_Exercice 7":  { tp: "", rapport: "" },
+  "Atelier 9_Exercice 8":  { tp: "", rapport: "" },
+
+
+
+  "Atelier 10_Exercice 1": { tp: "", rapport: "" },
+  "Atelier 10_Exercice 2": { tp: "", rapport: "" },
+  "Atelier 10_Exercice 3": { tp: "", rapport: "" },
+  "Atelier 10_Exercice 4": { tp: "", rapport: "" },
+  "Atelier 10_Exercice 5": { tp: "", rapport: "" },
+  "Atelier 10_Exercice 6": { tp: "", rapport: "" },
+  "Atelier 10_Exercice 7": { tp: "", rapport: "" },
+  "Atelier 10_Exercice 8": { tp: "", rapport: "" },
+
+
+
+
+  "Atelier 11_Exercice 1": { tp: "", rapport: "" },
+  "Atelier 11_Exercice 2": { tp: "", rapport: "" },
+  "Atelier 11_Exercice 3": { tp: "", rapport: "" },
+  "Atelier 11_Exercice 4": { tp: "", rapport: "" },
+  "Atelier 11_Exercice 5": { tp: "", rapport: "" },
+  "Atelier 11_Exercice 6": { tp: "", rapport: "" },
+  "Atelier 11_Exercice 7": { tp: "", rapport: "" },
+  "Atelier 11_Exercice 8": { tp: "", rapport: "" },
+
+
+
+
+  "Atelier 12_Exercice 1": { tp: "", rapport: "" },
+  "Atelier 12_Exercice 2": { tp: "", rapport: "" },
+  "Atelier 12_Exercice 3": { tp: "", rapport: "" },
+  "Atelier 12_Exercice 4": { tp: "", rapport: "" },
+  "Atelier 12_Exercice 5": { tp: "", rapport: "" },
+  "Atelier 12_Exercice 6": { tp: "", rapport: "" },
+  "Atelier 12_Exercice 7": { tp: "", rapport: "" },
+  "Atelier 12_Exercice 8": { tp: "", rapport: "" },
+
+
+
+
+  "Atelier 13_Exercice 1": { tp: "", rapport: "" },
+  "Atelier 13_Exercice 2": { tp: "", rapport: "" },
+  "Atelier 13_Exercice 3": { tp: "", rapport: "" },
+  "Atelier 13_Exercice 4": { tp: "", rapport: "" },
+  "Atelier 13_Exercice 5": { tp: "", rapport: "" },
+  "Atelier 13_Exercice 6": { tp: "", rapport: "" },
+  "Atelier 13_Exercice 7": { tp: "", rapport: "" },
+  "Atelier 13_Exercice 8": { tp: "", rapport: "" },
+
+
+
+
+
+  "Atelier 14_Exercice 1": { tp: "", rapport: "" },
+  "Atelier 14_Exercice 2": { tp: "", rapport: "" },
+  "Atelier 14_Exercice 3": { tp: "", rapport: "" },
+  "Atelier 14_Exercice 4": { tp: "", rapport: "" },
+  "Atelier 14_Exercice 5": { tp: "", rapport: "" },
+  "Atelier 14_Exercice 6": { tp: "", rapport: "" },
+  "Atelier 14_Exercice 7": { tp: "", rapport: "" },
+  "Atelier 14_Exercice 8": { tp: "", rapport: "" },
+
+
+
+
+  "Atelier 15_Exercice 1": { tp: "", rapport: "" },
+  "Atelier 15_Exercice 2": { tp: "", rapport: "" },
+  "Atelier 15_Exercice 3": { tp: "", rapport: "" },
+  "Atelier 15_Exercice 4": { tp: "", rapport: "" },
+  "Atelier 15_Exercice 5": { tp: "", rapport: "" },
+  "Atelier 15_Exercice 6": { tp: "", rapport: "" },
+  "Atelier 15_Exercice 7": { tp: "", rapport: "" },
+  "Atelier 15_Exercice 8": { tp: "", rapport: "" },
+
+
+
+
+  "Atelier 16_Exercice 1": { tp: "", rapport: "" },
+  "Atelier 16_Exercice 2": { tp: "", rapport: "" },
+  "Atelier 16_Exercice 3": { tp: "", rapport: "" },
+  "Atelier 16_Exercice 4": { tp: "", rapport: "" },
+  "Atelier 16_Exercice 5": { tp: "", rapport: "" },
+  "Atelier 16_Exercice 6": { tp: "", rapport: "" },
+  "Atelier 16_Exercice 7": { tp: "", rapport: "" },
+  "Atelier 16_Exercice 8": { tp: "", rapport: "" },
+
+
+
+  "Atelier 17_Exercice 1": { tp: "", rapport: "" },
+  "Atelier 17_Exercice 2": { tp: "", rapport: "" },
+  "Atelier 17_Exercice 3": { tp: "", rapport: "" },
+  "Atelier 17_Exercice 4": { tp: "", rapport: "" },
+  "Atelier 17_Exercice 5": { tp: "", rapport: "" },
+  "Atelier 17_Exercice 6": { tp: "", rapport: "" },
+  "Atelier 17_Exercice 7": { tp: "", rapport: "" },
+  "Atelier 17_Exercice 8": { tp: "", rapport: "" },
+
+
+
+  "Atelier 18_Exercice 1": { tp: "", rapport: "" },
+  "Atelier 18_Exercice 2": { tp: "", rapport: "" },
+  "Atelier 18_Exercice 3": { tp: "", rapport: "" },
+  "Atelier 18_Exercice 4": { tp: "", rapport: "" },
+  "Atelier 18_Exercice 5": { tp: "", rapport: "" },
+  "Atelier 18_Exercice 6": { tp: "", rapport: "" },
+  "Atelier 18_Exercice 7": { tp: "", rapport: "" },
+  "Atelier 18_Exercice 8": { tp: "", rapport: "" },
+
+
+
+  "Atelier 19_Exercice 1": { tp: "", rapport: "" },
+  "Atelier 19_Exercice 2": { tp: "", rapport: "" },
+  "Atelier 19_Exercice 3": { tp: "", rapport: "" },
+  "Atelier 19_Exercice 4": { tp: "", rapport: "" },
+  "Atelier 19_Exercice 5": { tp: "", rapport: "" },
+  "Atelier 19_Exercice 6": { tp: "", rapport: "" },
+  "Atelier 19_Exercice 7": { tp: "", rapport: "" },
+  "Atelier 19_Exercice 8": { tp: "", rapport: "" },
+
+
+
+  "Atelier 20_Exercice 1": { tp: "", rapport: "" },
+  "Atelier 20_Exercice 2": { tp: "", rapport: "" },
+  "Atelier 20_Exercice 3": { tp: "", rapport: "" },
+  "Atelier 20_Exercice 4": { tp: "", rapport: "" },
+  "Atelier 20_Exercice 5": { tp: "", rapport: "" },
+  "Atelier 20_Exercice 6": { tp: "", rapport: "" },
+  "Atelier 20_Exercice 7": { tp: "", rapport: "" },
+  "Atelier 20_Exercice 8": { tp: "", rapport: "" },
+};
+// ============================================================
+
+function getDefaultLinks(atelier, exercice) {
+  const key = atelier + "_" + exercice;
+  return MES_LIENS[key] || { tp: "", rapport: "" };
+}
+
+// Welcome overlay
 let welcomeRevealed = false;
 const welcomeOverlay = document.getElementById('welcomeOverlay');
 function hideWelcome() { if (!welcomeRevealed) { welcomeRevealed = true; welcomeOverlay.classList.add('hide'); } }
 window.addEventListener('scroll', function onFirstScroll() { if (!welcomeRevealed) { hideWelcome(); window.removeEventListener('scroll', onFirstScroll); } }, { passive: true, once: true });
 
-// Canvas background (same as previous)
+// Canvas background
 (function() {
   const canvas = document.getElementById('bgCanvas');
   const ctx = canvas.getContext('2d');
@@ -883,40 +1151,75 @@ function openContactModal() { document.getElementById('contactModal').classList.
 function closeContactModal() { document.getElementById('contactModal').classList.remove('open'); }
 function contactOverlayClick(e) { if (e.target.id === 'contactModal') closeContactModal(); }
 
-const MES_LIENS = {};
-function getDefaultLinks(atelier, exercice) { return { tp: "", rapport: "" }; }
-
 const ATELIERS = 20, EXERCICES_PAR_ATELIER = 8;
 let currentKey = '';
 const extIcon = `<svg viewBox="0 0 12 12" fill="none" width="10" height="10"><path d="M7 1h4v4M11 1L5.5 6.5M5 2H2a1 1 0 00-1 1v7a1 1 0 001 1h7a1 1 0 001-1V8" stroke="currentColor" stroke-width="1.4"/></svg>`;
 const gridContainer = document.getElementById('atelierGrid');
-for (let i = 1; i <= ATELIERS; i++) { 
-  const name = 'Atelier ' + i; 
-  const d = document.createElement('div'); d.className = 'atelier'; d.textContent = name; 
-  d.onclick = e => { const rect = d.getBoundingClientRect(); const rip = document.createElement('span'); rip.className = 'ripple'; const size = Math.max(d.offsetWidth, d.offsetHeight) * 2; rip.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - rect.left - size/2}px;top:${e.clientY - rect.top - size/2}px;`; d.appendChild(rip); setTimeout(() => rip.remove(), 700); openAtelier(name); }; 
-  gridContainer.appendChild(d); 
+
+for (let i = 1; i <= ATELIERS; i++) {
+  const name = 'Atelier ' + i;
+  const d = document.createElement('div'); d.className = 'atelier'; d.textContent = name;
+  d.onclick = e => { const rect = d.getBoundingClientRect(); const rip = document.createElement('span'); rip.className = 'ripple'; const size = Math.max(d.offsetWidth, d.offsetHeight) * 2; rip.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - rect.left - size/2}px;top:${e.clientY - rect.top - size/2}px;`; d.appendChild(rip); setTimeout(() => rip.remove(), 700); openAtelier(name); };
+  gridContainer.appendChild(d);
 }
-function openAtelier(name) { 
-  const box = document.getElementById('exercices'); 
-  box.innerHTML = '<h3>' + name + '</h3>'; 
-  for (let j = 1; j <= EXERCICES_PAR_ATELIER; j++) { 
-    const exName = 'Exercice ' + j; const key = name + '_' + exName; 
-    const defaultLinks = getDefaultLinks(name, exName);
-    const tpLink = localStorage.getItem(key + '_tp') || defaultLinks.tp;
-    const rapportLink = localStorage.getItem(key + '_rapport') || defaultLinks.rapport;
-    const card = document.createElement('div'); card.className = 'exercice-card'; card.dataset.key = key; 
-    card.innerHTML = `<div class="exercice-label">${exName}</div><div class="exercice-links"><a class="link-btn link-tp" ${tpLink ? 'href="' + tpLink + '" target="_blank"' : 'href="#"'} onclick="handleLinkClick(event,'${key}','tp')">${extIcon} TP (Code VS)</a><a class="link-btn link-rapport" ${rapportLink ? 'href="' + rapportLink + '" target="_blank"' : 'href="#"'} onclick="handleLinkClick(event,'${key}','rapport')">${extIcon} Rapport (Word)</a></div>`; 
-    box.appendChild(card); setTimeout(() => card.classList.add('show'), j * 50); 
-  } 
-  box.scrollIntoView({ behavior: 'smooth', block: 'start' }); 
+
+function openAtelier(name) {
+  const box = document.getElementById('exercices');
+  box.innerHTML = '<h3>' + name + '</h3>';
+  for (let j = 1; j <= EXERCICES_PAR_ATELIER; j++) {
+    const exName = 'Exercice ' + j;
+    const key = name + '_' + exName;
+    const defaults = getDefaultLinks(name, exName);
+    const tpLink = localStorage.getItem(key + '_tp') || defaults.tp;
+    const rapportLink = localStorage.getItem(key + '_rapport') || defaults.rapport;
+    const card = document.createElement('div'); card.className = 'exercice-card'; card.dataset.key = key;
+    card.innerHTML = `<div class="exercice-label">${exName}</div><div class="exercice-links"><a class="link-btn link-tp" ${tpLink ? 'href="' + tpLink + '" target="_blank"' : 'href="#"'} onclick="handleLinkClick(event,'${key}','tp')">${extIcon} TP (Code VS)</a><a class="link-btn link-rapport" ${rapportLink ? 'href="' + rapportLink + '" target="_blank"' : 'href="#"'} onclick="handleLinkClick(event,'${key}','rapport')">${extIcon} Rapport (Word)</a></div>`;
+    box.appendChild(card); setTimeout(() => card.classList.add('show'), j * 50);
+  }
+  box.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
-function handleLinkClick(e, key, type) { const link = localStorage.getItem(key + '_' + type); if (!link) { e.preventDefault(); openModal(key); } }
-function openModal(key) { currentKey = key; const parts = key.split('_'); document.getElementById('modalTitle').textContent = parts[0] + ' ' + parts[1]; document.getElementById('modal').style.display = 'block'; document.getElementById('tpLink').value = localStorage.getItem(key + '_tp') || ''; document.getElementById('rapportLink').value = localStorage.getItem(key + '_rapport') || ''; }
-function saveData() { const tp = document.getElementById('tpLink').value.trim(); const rapport = document.getElementById('rapportLink').value.trim(); if (tp) localStorage.setItem(currentKey + '_tp', tp); else localStorage.removeItem(currentKey + '_tp'); if (rapport) localStorage.setItem(currentKey + '_rapport', rapport); else localStorage.removeItem(currentKey + '_rapport'); const parts = currentKey.split('_'); openAtelier(parts[0]); closeModal(); }
-function deleteData() { localStorage.removeItem(currentKey + '_tp'); localStorage.removeItem(currentKey + '_rapport'); const parts = currentKey.split('_'); openAtelier(parts[0]); closeModal(); }
-function openModalLink(type) { const link = localStorage.getItem(currentKey + '_' + type); if (link) window.open(link, '_blank'); }
+
+function handleLinkClick(e, key, type) {
+  const defaults = MES_LIENS[key] || { tp: "", rapport: "" };
+  const link = localStorage.getItem(key + '_' + type) || defaults[type];
+  if (!link) { e.preventDefault(); openModal(key); }
+}
+
+function openModal(key) {
+  currentKey = key;
+  const parts = key.split('_');
+  document.getElementById('modalTitle').textContent = parts[0] + ' — ' + parts[1];
+  document.getElementById('modal').style.display = 'block';
+  const defaults = MES_LIENS[key] || { tp: "", rapport: "" };
+  document.getElementById('tpLink').value = localStorage.getItem(key + '_tp') || defaults.tp;
+  document.getElementById('rapportLink').value = localStorage.getItem(key + '_rapport') || defaults.rapport;
+}
+
+function saveData() {
+  const tp = document.getElementById('tpLink').value.trim();
+  const rapport = document.getElementById('rapportLink').value.trim();
+  if (tp) localStorage.setItem(currentKey + '_tp', tp); else localStorage.removeItem(currentKey + '_tp');
+  if (rapport) localStorage.setItem(currentKey + '_rapport', rapport); else localStorage.removeItem(currentKey + '_rapport');
+  const parts = currentKey.split('_');
+  openAtelier(parts[0]); closeModal();
+}
+
+function deleteData() {
+  localStorage.removeItem(currentKey + '_tp');
+  localStorage.removeItem(currentKey + '_rapport');
+  const parts = currentKey.split('_');
+  openAtelier(parts[0]); closeModal();
+}
+
+function openModalLink(type) {
+  const defaults = MES_LIENS[currentKey] || { tp: "", rapport: "" };
+  const link = localStorage.getItem(currentKey + '_' + type) || defaults[type];
+  if (link) window.open(link, '_blank');
+}
+
 function closeModal() { document.getElementById('modal').style.display = 'none'; }
 function outsideClick(e) { if (e.target.id === 'modal') closeModal(); }
+
 const atelierObserver = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('show'); atelierObserver.unobserve(e.target); } }); }, { threshold: 0.05 });
 document.querySelectorAll('.atelier').forEach(el => atelierObserver.observe(el));
 </script>
